@@ -180,7 +180,6 @@ export const GalleryScreen: React.FC = () => {
               size="md"
               className="flex items-center gap-2"
             >
-              <Plus className="h-5 w-5" />
               Add Image
             </Button>
           </FadeIn>
@@ -204,38 +203,38 @@ export const GalleryScreen: React.FC = () => {
           </div>
         ) : (
           <StaggerContainer
+            key={`gallery-${filteredImages.length}-${activeFilter}`}
             staggerDelay={STAGGER_DELAY.fast}
             className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4"
+            useInView={false}
           >
-            <AnimatePresence mode="wait">
-              {filteredImages.map((image, index) => (
-                <StaggerItem
-                  key={`${image.id}-${activeFilter}`}
-                  className={
-                    index === 0
-                      ? "col-span-1 row-span-2"
-                      : index === 4
-                        ? "col-span-2 md:col-span-1"
-                        : ""
-                  }
-                >
-                  <div className="relative">
-                    {isAdmin && isEditMode && (
-                      <AdminControls
-                        image={image}
-                        onEdit={() => setEditingImage(image)}
-                        onDelete={() => setDeletingImage(image)}
-                      />
-                    )}
-                    <ImageGalleryItem
-                      src={image.image_url}
-                      alt={image.title}
-                      aspectRatio="portrait"
+            {filteredImages.map((image, index) => (
+              <StaggerItem
+                key={image.id}
+                className={
+                  index === 0
+                    ? "col-span-1 row-span-2"
+                    : index === 4
+                      ? "col-span-2 md:col-span-1"
+                      : ""
+                }
+              >
+                <div className="relative">
+                  {isAdmin && isEditMode && (
+                    <AdminControls
+                      image={image}
+                      onEdit={() => setEditingImage(image)}
+                      onDelete={() => setDeletingImage(image)}
                     />
-                  </div>
-                </StaggerItem>
-              ))}
-            </AnimatePresence>
+                  )}
+                  <ImageGalleryItem
+                    src={image.image_url}
+                    alt={image.title}
+                    aspectRatio="portrait"
+                  />
+                </div>
+              </StaggerItem>
+            ))}
           </StaggerContainer>
         )}
       </section>

@@ -1,19 +1,16 @@
-import React, { useState, useEffect } from "react";
 import { Plus } from "lucide-react";
-import {
-  Button,
-  AdminEditToggle,
-  ConfirmDialog,
-} from "@/common/components";
+import type React from "react";
+import { useEffect, useState } from "react";
 import {
   FadeIn,
   SlideIn,
   StaggerContainer,
   StaggerItem,
 } from "@/common/animations";
-import { supabase, type Class } from "@/lib/supabase";
+import { AdminEditToggle, Button, ConfirmDialog } from "@/common/components";
 import { useAuth } from "@/hooks/useAuth";
-import { ClassListCard, AddClassModal, EditClassModal } from "./components";
+import { type Class, supabase } from "@/lib/supabase";
+import { AddClassModal, ClassListCard, EditClassModal } from "./components";
 
 type ClassType = "All" | "Bachata" | "Salsa" | "Chair";
 
@@ -115,8 +112,8 @@ export const ClassesScreen: React.FC = () => {
       />
 
       {/* Page Heading */}
-      <div className="flex flex-wrap justify-between items-start gap-3 p-4">
-        <div className="flex min-w-72 flex-col gap-3">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 p-4">
+        <div className="flex flex-col gap-3 flex-1">
           <FadeIn direction="up" delay={0.1} useInView={false}>
             <p className="text-text-primary text-4xl md:text-5xl font-serif leading-tight tracking-[-0.033em]">
               Upcoming Classes
@@ -137,9 +134,8 @@ export const ClassesScreen: React.FC = () => {
             <Button
               onClick={() => setIsAddModalOpen(true)}
               size="md"
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 whitespace-nowrap"
             >
-              <Plus className="h-5 w-5" />
               Add Class
             </Button>
           </FadeIn>
