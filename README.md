@@ -1,40 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Looci's Bachata Portfolio
 
-## Getting Started
+A beautiful, modern portfolio website for Lucy (Looci), a professional bachata instructor. Features a stunning rose-gold color scheme, dark theme design, and fully responsive layout.
 
-First, run the development server:
+## 🚀 Quick Start
 
 ```bash
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Open http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📄 Pages
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- **Home** (`/`) - Hero section, bio, class offerings, testimonials
+- **Gallery** (`/gallery`) - Photo gallery with filters
+- **Classes** (`/classes`) - Calendar and booking system
+- **Contact** (`/contact`) - Contact form and information
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## 🎨 Design Features
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+- Rose-gold (#B76E79) and wine gradient color scheme
+- Glass morphism effects
+- Smooth transitions and animations
+- Mobile-responsive navigation
+- Next.js optimized images
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Tech Stack
 
-## Learn More
+- Next.js 16 (Pages Router)
+- TypeScript
+- Tailwind CSS v4
+- shadcn/ui components
+- Biome (linter/formatter)
 
-To learn more about Next.js, take a look at the following resources:
+## 📝 Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+```bash
+npm run dev      # Start development server
+npm run build    # Build for production
+npm start        # Start production server
+npm run lint     # Run linter
+npm run format   # Format code
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📂 Project Structure
 
-## Deploy on Vercel
+```
+src/
+├── common/components/    # Reusable UI components
+├── screens/             # Page-level components
+└── pages/               # Next.js routes
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📸 Images
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+Lucy's photos and logos are in `public/images/`:
+- `/images/lucy/` - Instructor photos (5 images)
+- `/images/logos/` - Brand logos (3 variations)
+
+## 🎯 Customization
+
+To update content:
+1. Edit screens in `src/screens/`
+2. Update contact info in `src/screens/contact/index.tsx`
+3. Add/remove photos in `public/images/lucy/`
+4. Modify testimonials in `src/screens/home/index.tsx`
+
+## 🔜 Backend Integration
+
+Forms are ready for backend integration:
+- Contact form submission
+- Class booking system
+- Calendar event management
+
+## 📚 Documentation
+
+See [PROJECT_SUMMARY.md](./PROJECT_SUMMARY.md) for detailed implementation guide.
+
+---
+
+**Built for Looci's Bachata Studio** 💃🕺

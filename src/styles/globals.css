@@ -1,26 +1,137 @@
+@import url("https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;700;900&family=Playfair+Display:wght@700&display=swap");
 @import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Rose-Gold Color Scheme */
+  --rose-gold: #b76e79;
+  --wine: #5c001f;
+  --wine-dark: #6d1a36;
+  --wine-darker: #4a0404;
+  --background-dark: #121212;
+  --background-darker: #1a1a1a;
+  --text-primary: #f5f5dc;
+  --text-secondary: #e0e0c8;
+  --text-light: #f5f5f5;
+  --border-color: #4a2a30;
+  --input-bg: rgba(40, 20, 25, 0.5);
+  --warm-gold: #c9a97e;
+
+  /* Shadcn variables mapped to our theme */
+  --background: #121212;
+  --foreground: #f5f5dc;
+  --radius: 0.5rem;
+  --card: rgba(40, 20, 25, 0.3);
+  --card-foreground: #f5f5dc;
+  --popover: #1a1a1a;
+  --popover-foreground: #f5f5dc;
+  --primary: #b76e79;
+  --primary-foreground: #f5f5dc;
+  --secondary: #5c001f;
+  --secondary-foreground: #f5f5dc;
+  --muted: rgba(183, 110, 121, 0.2);
+  --muted-foreground: #e0e0c8;
+  --accent: #b76e79;
+  --accent-foreground: #f5f5dc;
+  --destructive: #d41142;
+  --border: rgba(74, 42, 48, 0.3);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: #b76e79;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-rose-gold: var(--rose-gold);
+  --color-wine: var(--wine);
+  --color-wine-dark: var(--wine-dark);
+  --color-wine-darker: var(--wine-darker);
+  --color-warm-gold: var(--warm-gold);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-border-color: var(--border-color);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --font-display: "Epilogue", sans-serif;
+  --font-serif: "Playfair Display", serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(to bottom, #6d1a36 0%, #121212 100%);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  min-height: 100vh;
+}
+
+.dark {
+  --background: #121212;
+  --foreground: #f5f5dc;
+  --card: rgba(40, 20, 25, 0.3);
+  --card-foreground: #f5f5dc;
+  --popover: #1a1a1a;
+  --popover-foreground: #f5f5dc;
+  --primary: #b76e79;
+  --primary-foreground: #f5f5dc;
+  --secondary: #5c001f;
+  --secondary-foreground: #f5f5dc;
+  --muted: rgba(183, 110, 121, 0.2);
+  --muted-foreground: #e0e0c8;
+  --accent: #b76e79;
+  --accent-foreground: #f5f5dc;
+  --destructive: #d41142;
+  --border: rgba(74, 42, 48, 0.3);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: #b76e79;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+  }
+  .font-display {
+    font-family: var(--font-display);
+  }
+  .font-serif {
+    font-family: var(--font-serif);
+  }
+}
+
+@layer utilities {
+  .glass-effect {
+    @apply bg-white/5 backdrop-blur-sm border border-white/10;
+  }
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-sm border border-rose-gold/20 rounded-xl;
+  }
 }

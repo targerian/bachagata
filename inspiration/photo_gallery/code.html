@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bachata Instructor - Gallery</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;700;900&amp;family=Great+Vibes&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d41142",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#121212",
+                        "accent": "#B76E79",
+                    },
+                    fontFamily: {
+                        "display": ["Epilogue", "sans-serif"],
+                        "script": ["Great Vibes", "cursive"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-image: linear-gradient(to bottom, #4A0404, #121212);
+        }
+    </style>
+</head>
+<body class="font-display text-[#F5F5F5] bg-background-dark dark">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<div class="flex h-full grow flex-col items-center">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-50 flex w-full max-w-6xl items-center justify-between whitespace-nowrap border-b border-solid border-accent/20 bg-background-dark/50 px-6 py-4 backdrop-blur-md md:px-10">
+<div class="flex items-center gap-4">
+<div class="h-6 w-6 text-accent">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 42.4379C4 42.4379 14.0962 36.0744 24 41.1692C35.0664 46.8624 44 42.2078 44 42.2078L44 7.01134C44 7.01134 35.068 11.6577 24.0031 5.96913C14.0971 0.876274 4 7.27094 4 7.27094L4 42.4379Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em] text-[#F5F5F5]">Instructor's Name</h2>
+</div>
+<nav class="hidden items-center gap-9 md:flex">
+<a class="text-sm font-medium leading-normal text-[#F5F5F5] hover:text-accent" href="#">Home</a>
+<a class="text-sm font-medium leading-normal text-[#F5F5F5] hover:text-accent" href="#">About</a>
+<a class="text-sm font-medium leading-normal text-[#F5F5F5] hover:text-accent" href="#">Classes</a>
+<a class="text-sm font-medium leading-normal text-accent" href="#">Gallery</a>
+<a class="text-sm font-medium leading-normal text-[#F5F5F5] hover:text-accent" href="#">Contact</a>
+</nav>
+<button class="hidden min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-accent h-10 px-4 text-sm font-bold leading-normal tracking-[0.015em] text-background-dark transition-colors hover:bg-accent/80 md:flex">
+<span class="truncate">Book Now</span>
+</button>
+<button class="md:hidden text-[#F5F5F5]">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</header>
+<main class="w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 md:py-16">
+<!-- HeroSection -->
+<section class="@container mb-12 md:mb-20">
+<div class="flex min-h-[480px] flex-col items-center justify-center gap-6 rounded-xl bg-cover bg-center bg-no-repeat p-4 text-center @[480px]:gap-8" data-alt="Silhouetted couple dancing bachata against a vibrant sunset" style='background-image: linear-gradient(rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.6) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuAnlPt-1f_7RHLpE5RHvo6U3hXkAMcIl3K1K8cb3ahVz8nkPD9QFUw60gnVDbACIhaPOLCOot_6YQcVmVGKkD_6hD0k5TIX0Tty_2jbQ5BtOazel-YN4G7wA8sjvh6qZW6rn6_gENc86xrehl4Drh9S9tRySeqodLmMIIz516YGUaByV4MH6qdXLL_BzQ8mNa_QSrGe_q_RfpN6F5MrPZTxh3P1aSxpZkgZESRXlRAKAIw7LDm1X97F1IaFLnGkJdzAmcZ63zxc6bw");'>
+<div class="flex flex-col gap-2">
+<h1 class="font-script text-5xl font-black leading-tight tracking-normal text-white @[480px]:text-7xl">
+                                Capturing the Moment
+                            </h1>
+<h2 class="text-base font-normal leading-normal text-[#F5F5F5] @[480px]:text-lg">
+                                Explore the passion, connection, and elegance of bachata through our gallery.
+                            </h2>
+</div>
+</div>
+</section>
+<!-- Chips/Filters -->
+<section class="mb-8 flex justify-center">
+<div class="flex flex-wrap justify-center gap-3">
+<button class="flex h-10 shrink-0 cursor-pointer items-center justify-center rounded-full bg-accent px-5 text-sm font-medium leading-normal text-background-dark">All</button>
+<button class="flex h-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-accent/40 bg-transparent px-5 text-sm font-medium leading-normal text-[#F5F5F5] transition-colors hover:bg-accent/20">Performances</button>
+<button class="flex h-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-accent/40 bg-transparent px-5 text-sm font-medium leading-normal text-[#F5F5F5] transition-colors hover:bg-accent/20">Workshops</button>
+<button class="flex h-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-accent/40 bg-transparent px-5 text-sm font-medium leading-normal text-[#F5F5F5] transition-colors hover:bg-accent/20">Socials</button>
+</div>
+</section>
+<!-- ImageGrid -->
+<section class="mb-12 md:mb-20">
+<div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+<div class="group relative col-span-1 row-span-2 overflow-hidden rounded-xl">
+<div class="h-full w-full transform bg-cover bg-center bg-no-repeat transition-transform duration-300 ease-in-out group-hover:scale-105" data-alt="Dancers in an elegant dip pose during a performance" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCpFqW88_JMKucKvWRR_6gOxAV5llde5sR_PusjrSOfvKttuEHMIjploS4JQOIWOoar3VNvcbnsIaS_9O1rhRIQFylDkhFW4kRudp4-Vr8Teu_5f0dVhN1DUO-svTlov51z_dOyDxRAWR8koDxcxZcyg8cE0OGBHTOWtzUFVvEcXO8O6LmxyJGW_QaNaQY88DxbjEuF7vL4_DlDPi-3A4IWJpeV8L1QLgCUrzYTWg0Cz9f1VrYEzYlvNf5crOzwZEWzcXzV3s7kkgM");'></div>
+</div>
+<div class="group relative col-span-1 overflow-hidden rounded-xl">
+<div class="aspect-[4/3] w-full transform bg-cover bg-center bg-no-repeat transition-transform duration-300 ease-in-out group-hover:scale-105" data-alt="Close up of dancers' hands clasped together" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBta4GHnwYpfka_4UA_jZZwYhdPvF7eVjEopgAM0refx9i1TIF8ednJOpoI06moUzK5J-s3b5PiiexoWw3WIjS6ifZFKOk9a66a0OD-RxlEn5FZ-InNLQgd0sopeTCooBzemsNzJS3wEY3UqZFn3gGnCBnsd-6CVjOPyqc6uKJAjWahJI5BZHP6w4u7mHNpUkYABvPVH5xUpu8XnQ4ZvdXEL2PGKR9FZb9H56hNOiEArXfnYc2Ugr_eKc5rXCCsBIQ9sGXCCvNWrhA");'></div>
+</div>
+<div class="group relative col-span-1 overflow-hidden rounded-xl">
+<div class="aspect-[4/3] w-full transform bg-cover bg-center bg-no-repeat transition-transform duration-300 ease-in-out group-hover:scale-105" data-alt="A crowded social dance floor with people dancing bachata" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC984hQgKyyuA1a4MuAeSnJ7iBtOkOFi0EeIL3yRHgraRa61so7LPHQ-Tg7Rdm1V4NCGEjFqKKV9v955z2rxhbiaroJE6dM0bKywWAaEkOVjHcDinuikNdZrugkAJIHyeVSK2IvS6GRiLAHcyPqVxmDfcJNZGMjUAb8bDK8EVJDWibjMRkCgXgVNuw2k_aFIN4Ozpz8We1CiA5jDfVnYrEquiG570KMK9AiPASw8eXYIkNdGNh__UQ4rB4Hm4cn7JSQr1FC1MrhJBo");'></div>
+</div>
+<div class="group relative col-span-1 overflow-hidden rounded-xl">
+<div class="aspect-[4/3] w-full transform bg-cover bg-center bg-no-repeat transition-transform duration-300 ease-in-out group-hover:scale-105" data-alt="A smiling woman mid-spin during a dance class" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB1bxtAn74bsQzMcj1d1ACYyjbs6xSjoJR-0hBBED7oPXcIs9F2SdQnGnQ8FZVGuQWCGkclV8ks0qw8CwPm_0veRl178QVD4nyopETLgAxaFi5YSp_XKWV4HD1gXSruwDA6PjK3gBsJ_pMsrhoxhn1fs5M6HKDQVMLG3UuZzh-IFJWImzWEaFub2Jr6HIXpZ52nkcFkVPmQWN6Th4vgEFiHpfFfY33jiqg7eL7DIPBLF3R_9Di1mFIHHuRuvsH2DWgtbb4GgBohsiI");'></div>
+</div>
+<div class="group relative col-span-2 row-span-1 overflow-hidden rounded-xl md:col-span-1">
+<div class="aspect-[4/3] w-full transform bg-cover bg-center bg-no-repeat transition-transform duration-300 ease-in-out group-hover:scale-105" data-alt="Instructor demonstrating a move in a workshop" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC5OKl6cyN6NfXkk5KtgdEZl-kd7LgHQ5D0_Q2Qf4FaU6LXhhu6cDX8smQxx5MGABFhv-oglc98rwpwjFW_FHs-LQLx2dhcdwcY8e5On0hKLqdPesAPQcxcIrL4CJzNWR8yPdzmp_uonMgmPw0JTs8g_H1_jE2FW2fK1CgQjzk8SHeWoW9q_PU47FNLksdgLD2NZtzBnlkHIbMLPQerBekZ3sBvkt5Wdk8txOkBsFXv1vzleSUe0JIVgumzEIA01sLAGwmY9T2WHC8");'></div>
+</div>
+<div class="group relative col-span-1 overflow-hidden rounded-xl">
+<div class="aspect-[4/3] w-full transform bg-cover bg-center bg-no-repeat transition-transform duration-300 ease-in-out group-hover:scale-105" data-alt="A man and woman laughing while dancing" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAT-2vmNZTbIfbCgyCE6pSPMCO645IhaIiF3U67H89SnuSuhnAh8oZgsJ-bkOH01y2G2nDPfmNaWiaQHrcJusPJgOin_Yq6nKqYAkNjaMNBY5RqmfXFmABu0kv7X5s-kqvRYkxRjEwYQpdBRvHFJENE4R5Y3T_JRmCFj08jE-TMonmRzNa6E5MLAsi_ztX4E5CyDgUkQvDZLIZsCNCDWm9hGXCTflpLPc73h_LqZd_aVjvO-ZEnt8Po1wF77fjwVdwZctsGLnKsgOM");'></div>
+</div>
+<div class="group relative col-span-1 overflow-hidden rounded-xl">
+<div class="aspect-[4/3] w-full transform bg-cover bg-center bg-no-repeat transition-transform duration-300 ease-in-out group-hover:scale-105" data-alt="Dancer's feet in motion on the dance floor" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAD2LRgMApfInE4LNHEEtLpC70lWpdydhntCREdWAJIVZyKYrm70pmwkp5ohZTPbJ0tjk4tg6NQe6oL_bRt9Z6LfWKDDnCIA7a5sV1pE27JCWVXw7Lnm0eNYMbPWIR7YgX0x7ZX1pxRLT88QAniIcYcWj3zg_eq1TG4c8gEE2_M_UYJpTVog1mdVIwntxN8jNEd9DX35qlhTKyv2y4KAmn7JntuR1IxS9TPP_LsQHnkB0cqQCxZ0ATjkT41cjgfDL9PHnDUD5EFjj0");'></div>
+</div>
+<div class="group relative col-span-1 row-span-2 overflow-hidden rounded-xl">
+<div class="h-full w-full transform bg-cover bg-center bg-no-repeat transition-transform duration-300 ease-in-out group-hover:scale-105" data-alt="Couple striking a final pose under stage lights" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDNRxvAxnJgpscQDjMlBXfeTzkgV3qzQkqJy3Wlnv7GWIt9vQErkBz3zBrmtiWNE0BKaAzntdbZf2xAx6FOM0HDVJjIFSUtHPWA4bZ0tI3qg8IDsXBrcba7yY_fUayFtFJiJY_cmxzw_JuNrEC53dycUG-121jxX9B1fj4J92ATrFQWlTOLHTWHguAeYCf2pK7G_U4uuLUIhGvqXOZUlaK2nkwI-TxhrvEtMFVFojqM5XhaR8AVnAXEzHzUojRcC0U26120sTpv0DE");'></div>
+</div>
+<div class="group relative col-span-1 overflow-hidden rounded-xl">
+<div class="aspect-[4/3] w-full transform bg-cover bg-center bg-no-repeat transition-transform duration-300 ease-in-out group-hover:scale-105" data-alt="Dancers silhouetted against a bright light" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCNV19RrKqiI2XUwU69oqaMZZG06dD8c_0JUjdSYmimMxSMHLHRVTqShJoPY6Tl8KbWjZ6F80zyI7YMMPbmXRX0UD1xK-OR_IS3hGSFL8Kg2qMGoloReuwre-MMMDVzf3tUZnRc3LSJwVeQjFSs7rkkqmCSQn1UmNYU3OXZaMaKxAo5_8rQKbUe0hT9hsBz7ONYBKv1tc_NENe-eAKBgiIWCFcOcPOnfi0o_gLq0JSEtMUXoh63pVxUeaAaNfM1OoeQtRNtfDgiqKA");'></div>
+</div>
+<div class="group relative col-span-1 overflow-hidden rounded-xl">
+<div class="aspect-[4/3] w-full transform bg-cover bg-center bg-no-repeat transition-transform duration-300 ease-in-out group-hover:scale-105" data-alt="Candid shot of students practicing in a dance studio" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAg_CyPE2qDQCzqKKtywEPchNSuWRoauMOhvvJbxQPgV53B42h3o1BNmCQySVbhBX0IRCq4P8oY0A8gfL4u3oyM3Er-3xaA1u2GMVJpWw8syZTxhTBYXuSP7_239AZyfWsv7gMnZQIb1aELzjH3z4h9jeA3Ba6RsbE1wsniUlIZMEvESJ3kORE8iS5HdzIHO-9TBFORVPxUSyx_06t4zadBbM62IPNhucrZ9_H8M_g0AAtotKFukLWSFkGCeSwPlCQygzyJJJMU0K8");'></div>
+</div>
+<div class="group relative col-span-1 overflow-hidden rounded-xl">
+<div class="aspect-[4/3] w-full transform bg-cover bg-center bg-no-repeat transition-transform duration-300 ease-in-out group-hover:scale-105" data-alt="A passionate bachata embrace" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBF5JXCNlTNYsaR4SliTiEB0uZEZJwtamSNYOIKl1U5eq2E2-xaDc9cL0wTBMnk0CWBnyj_j4UgjkCHqDjQ0BlcKPBswEM0d78zmKbSr6hkK5lyBXs3qx2tm6pN597QWTAgWHQiX_WXSFc0EjGK3K-EIilpA7pkP6d9eqlkq-y5-0Z_-u0nVhyaK5NXACeWdzKV8KXMT7-f4Rpaw6HWne5l4lzPFffKtLPFR6f6Ag5EMZoIbUnOLujTvYLPEQp1vhLwKll5Rbhqz0k");'></div>
+</div>
+</div>
+</section>
+<!-- Pagination -->
+<nav class="flex items-center justify-center p-4">
+<a class="flex size-10 items-center justify-center text-[#F5F5F5]/60 hover:text-accent" href="#">
+<span class="material-symbols-outlined text-xl">chevron_left</span>
+</a>
+<a class="flex size-10 items-center justify-center rounded-full bg-accent text-sm font-bold leading-normal tracking-[0.015em] text-background-dark" href="#">1</a>
+<a class="flex size-10 items-center justify-center rounded-full text-sm font-normal leading-normal text-[#F5F5F5] hover:bg-accent/20" href="#">2</a>
+<a class="flex size-10 items-center justify-center rounded-full text-sm font-normal leading-normal text-[#F5F5F5] hover:bg-accent/20" href="#">3</a>
+<span class="flex size-10 items-center justify-center rounded-full text-sm font-normal leading-normal text-[#F5F5F5]">...</span>
+<a class="flex size-10 items-center justify-center text-[#F5F5F5]/60 hover:text-accent" href="#">
+<span class="material-symbols-outlined text-xl">chevron_right</span>
+</a>
+</nav>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-accent/20 bg-background-dark/50 py-8">
+<div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-6 text-center md:flex-row md:text-left">
+<p class="text-sm text-[#F5F5F5]/70">© 2024 Instructor's Name. All Rights Reserved.</p>
+<div class="flex items-center gap-4">
+<a class="text-[#F5F5F5]/70 hover:text-accent" href="#">
+<svg aria-hidden="true" class="h-6 w-6" fill="currentColor" viewbox="0 0 24 24">
+<path clip-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" fill-rule="evenodd"></path>
+</svg>
+</a>
+<a class="text-[#F5F5F5]/70 hover:text-accent" href="#">
+<svg aria-hidden="true" class="h-6 w-6" fill="currentColor" viewbox="0 0 24 24">
+<path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.644-.069 4.85-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.267.058 1.67.072 4.947.072s3.68-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.058-1.267.072-1.67.072-4.947s-.014-3.68-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98C15.67.014 15.26 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"></path>
+</svg>
+</a>
+<a class="text-[#F5F5F5]/70 hover:text-accent" href="#">
+<svg aria-hidden="true" class="h-6 w-6" fill="currentColor" viewbox="0 0 24 24">
+<path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.701V8.115l6.857 3.885-6.857 3.885z"></path>
+</svg>
+</a>
+</div>
+</div>
+</footer>
+</div>
+</div>
+</body></html>

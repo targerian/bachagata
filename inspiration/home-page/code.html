@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bachata Instructor Homepage</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;700;800;900&amp;family=Playfair+Display:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<style>
+        .font-handwritten {
+            font-family: 'Playfair Display', serif;
+        }
+        .text-rose-gold {
+            color: #b76e79;
+        }
+        .bg-rose-gold {
+            background-color: #b76e79;
+        }
+        .border-rose-gold {
+            border-color: #b76e79;
+        }
+        .hover\:bg-warm-gold:hover {
+            background-color: #c9a97e;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#d41142",
+              "background-light": "#f8f6f6",
+              "background-dark": "#1a1a1a",
+              "wine": "#5c001f",
+              "rose-gold": "#b76e79",
+              "warm-gold": "#c9a97e",
+              "cream": "#f5f5f0"
+            },
+            fontFamily: {
+              "display": ["Epilogue", "sans-serif"],
+              "handwritten": ["Playfair Display", "serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+</head>
+<body class="font-display bg-gradient-to-b from-wine to-background-dark text-cream">
+<div class="relative w-full overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap px-6 sm:px-10 md:px-20 py-4 bg-background-dark/30 backdrop-blur-sm border-b border-solid border-rose-gold/20">
+<div class="flex items-center gap-4 text-cream">
+<div class="w-8 h-8 text-rose-gold">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M36.7273 44C33.9891 44 31.6043 39.8386 30.3636 33.69C29.123 39.8386 26.7382 44 24 44C21.2618 44 18.877 39.8386 17.6364 33.69C16.3957 39.8386 14.0109 44 11.2727 44C7.25611 44 4 35.0457 4 24C4 12.9543 7.25611 4 11.2727 4C14.0109 4 16.3957 8.16144 17.6364 14.31C18.877 8.16144 21.2618 4 24 4C26.7382 4 29.123 8.16144 30.3636 14.31C31.6043 8.16144 33.9891 4 36.7273 4C40.7439 4 44 12.9543 44 24C44 35.0457 40.7439 44 36.7273 44Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-cream text-xl font-bold leading-tight tracking-[-0.015em]">Instructor Initials</h2>
+</div>
+<nav class="hidden md:flex flex-1 justify-end gap-8">
+<div class="flex items-center gap-9">
+<a class="text-cream text-sm font-medium leading-normal hover:text-rose-gold transition-colors" href="#about">About</a>
+<a class="text-cream text-sm font-medium leading-normal hover:text-rose-gold transition-colors" href="#classes">Classes</a>
+<a class="text-cream text-sm font-medium leading-normal hover:text-rose-gold transition-colors" href="#testimonials">Testimonials</a>
+<a class="text-cream text-sm font-medium leading-normal hover:text-rose-gold transition-colors" href="#contact">Contact</a>
+</div>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-6 bg-rose-gold text-wine text-sm font-bold leading-normal tracking-[0.015em] hover:bg-warm-gold transition-all duration-300 transform hover:scale-105">
+<span class="truncate">Schedule Trial</span>
+</button>
+</nav>
+<div class="md:hidden">
+<button class="text-cream">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<main class="flex flex-col items-center">
+<div class="w-full max-w-6xl px-6 sm:px-10">
+<!-- Hero Section -->
+<section class="w-full min-h-[calc(100vh-80px)] flex flex-col items-center justify-center text-center py-20">
+<div class="w-full h-full absolute top-0 left-0 bg-cover bg-center bg-no-repeat" data-alt="Dancers enjoying bachata on a beach at sunset" style='background-image: linear-gradient(to top, rgba(92, 0, 31, 1) 0%, rgba(92, 0, 31, 0.6) 50%, rgba(0, 0, 0, 0.2) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuCKvRYG5uikTQPgxaE3J-Wfn0hrMj0ChygaHhzQaTasbMLE3B52DAY7-zqOuQ2RkdoVTRn2NqfCRIHcPzup8scE3iJeXZfaRmVj4QB2KptT9GfYP8MECZIYP2oBM9J1_W1sj0kvwu81yY1CX4WC278udlQrwZdvRiEquiSDjFPXahn6ZqcCeaiuUvAIgkVRDyaBZH9_OJmMXxMTdC6ORL8wDSk73UDnE5bKQjBGxzACSi4_RGtRM7nGfbW8Q5FzEpmO06kQ140mbqM");'></div>
+<div class="relative z-10 flex flex-col gap-6 items-center">
+<h1 class="font-handwritten text-cream text-5xl md:text-7xl lg:text-8xl font-bold">
+                        Feel the Rhythm, Find Your Passion
+                    </h1>
+<p class="text-cream text-base md:text-lg max-w-2xl">
+                        Transform your dance, one step at a time. Join a community of dancers and discover the joy of bachata.
+                    </p>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-rose-gold text-wine text-base font-bold leading-normal tracking-[0.015em] mt-4 hover:bg-warm-gold transition-all duration-300 transform hover:scale-105">
+<span class="truncate">Book Now</span>
+</button>
+</div>
+</section>
+<!-- Instructor Introduction Section -->
+<section class="py-24" id="about">
+<div class="flex flex-col md:flex-row items-center gap-10 md:gap-16">
+<div class="w-full md:w-1/3">
+<div class="bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl shadow-2xl" data-alt="Professional portrait of the dance instructor smiling" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB3P625Hv1MzaAWhkkIbszY7O-Hoh6M5hinz29mNRd95C8QA2gtYa8KNs4oP1Iz5_EbIY-1PR-frTjKRcTYE4yLCNo2FRdbafFzwfJ0vgyO1naPoBe9VkpYRABDSOZq2drR_2szkPZCTL-9G1y4YXWqLeZBe9VnMIQOTx6fR97ev84mU3MyW_6J9Ey6g-8VR46U-O4lRP6POOK_y3R8-lF7iN42poOrGNscbwKr5EB32PJLfaB5XwUQr0qhMeLJQJQyO-u3WZ9cVQE");'></div>
+</div>
+<div class="flex flex-col gap-4 w-full md:w-2/3">
+<h2 class="text-cream text-3xl md:text-4xl font-bold leading-tight tracking-[-0.015em] font-handwritten">Meet Your Instructor</h2>
+<p class="text-rose-gold text-lg font-semibold">Alex's Bio</p>
+<p class="text-cream/80 text-base font-normal leading-relaxed">
+                            With over a decade of experience, I am dedicated to sharing the joy and connection of bachata. My teaching philosophy focuses on building a strong foundation, fostering musicality, and creating a supportive, fun atmosphere for all students, from absolute beginners to advanced dancers. Let's dance together and create unforgettable memories on the dance floor.
+                        </p>
+</div>
+</div>
+</section>
+<!-- Class Offerings Section -->
+<section class="py-24" id="classes">
+<div class="text-center mb-12">
+<h2 class="text-cream text-3xl md:text-4xl font-bold leading-tight tracking-[-0.015em] font-handwritten">Class Offerings</h2>
+<p class="text-cream/80 mt-2 max-w-xl mx-auto">Explore the variety of classes designed to ignite your passion for dance.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="flex flex-col items-center p-8 bg-background-dark/30 rounded-xl border border-rose-gold/20 backdrop-blur-sm hover:border-rose-gold/50 transition-all duration-300">
+<div class="p-4 bg-rose-gold/10 rounded-full mb-4">
+<span class="material-symbols-outlined text-rose-gold text-4xl">music_note</span>
+</div>
+<h3 class="text-xl font-bold text-cream mb-2">Bachata</h3>
+<p class="text-center text-cream/80 text-sm leading-relaxed">
+                            Dive into the heart of Dominican rhythm. Learn fundamental steps, sensual body movement, and intricate partner work.
+                        </p>
+</div>
+<div class="flex flex-col items-center p-8 bg-background-dark/30 rounded-xl border border-rose-gold/20 backdrop-blur-sm hover:border-rose-gold/50 transition-all duration-300">
+<div class="p-4 bg-rose-gold/10 rounded-full mb-4">
+<span class="material-symbols-outlined text-rose-gold text-4xl">whatshot</span>
+</div>
+<h3 class="text-xl font-bold text-cream mb-2">Salsa</h3>
+<p class="text-center text-cream/80 text-sm leading-relaxed">
+                            Experience the energy and fire of Salsa. Master the timing, spins, and stylish footwork of this vibrant Latin dance.
+                        </p>
+</div>
+<div class="flex flex-col items-center p-8 bg-background-dark/30 rounded-xl border border-rose-gold/20 backdrop-blur-sm hover:border-rose-gold/50 transition-all duration-300">
+<div class="p-4 bg-rose-gold/10 rounded-full mb-4">
+<span class="material-symbols-outlined text-rose-gold text-4xl">chair</span>
+</div>
+<h3 class="text-xl font-bold text-cream mb-2">Chair Dancing</h3>
+<p class="text-center text-cream/80 text-sm leading-relaxed">
+                            Build confidence and express yourself in this empowering solo dance style that combines sensuality with fitness.
+                        </p>
+</div>
+</div>
+</section>
+<!-- Testimonials Section -->
+<section class="py-24" id="testimonials">
+<div class="text-center mb-12">
+<h2 class="text-cream text-3xl md:text-4xl font-bold leading-tight tracking-[-0.015em] font-handwritten">What My Students Say</h2>
+</div>
+<div class="flex flex-col md:flex-row gap-8">
+<div class="flex-1 p-8 bg-background-dark/30 rounded-xl border border-rose-gold/20 backdrop-blur-sm">
+<div class="flex mb-4">
+<span class="material-symbols-outlined text-warm-gold">star</span>
+<span class="material-symbols-outlined text-warm-gold">star</span>
+<span class="material-symbols-outlined text-warm-gold">star</span>
+<span class="material-symbols-outlined text-warm-gold">star</span>
+<span class="material-symbols-outlined text-warm-gold">star</span>
+</div>
+<blockquote class="text-cream/80 italic mb-4">"The best dance instructor I've ever had! Alex's passion is contagious, and the classes are so much fun. I've improved more in a few months than I did in years elsewhere."</blockquote>
+<footer class="text-rose-gold font-bold">- Jessica L.</footer>
+</div>
+<div class="flex-1 p-8 bg-background-dark/30 rounded-xl border border-rose-gold/20 backdrop-blur-sm">
+<div class="flex mb-4">
+<span class="material-symbols-outlined text-warm-gold">star</span>
+<span class="material-symbols-outlined text-warm-gold">star</span>
+<span class="material-symbols-outlined text-warm-gold">star</span>
+<span class="material-symbols-outlined text-warm-gold">star</span>
+<span class="material-symbols-outlined text-warm-gold">star</span>
+</div>
+<blockquote class="text-cream/80 italic mb-4">"A wonderfully patient and clear teacher. Alex breaks down complex moves in a way that's easy to understand. The atmosphere is always supportive and welcoming."</blockquote>
+<footer class="text-rose-gold font-bold">- Michael B.</footer>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full bg-background-dark border-t border-rose-gold/20 mt-24" id="contact">
+<div class="max-w-6xl mx-auto py-10 px-6 sm:px-10 text-center text-cream/70">
+<div class="flex justify-center gap-6 mb-6">
+<a class="text-cream/70 hover:text-rose-gold transition-colors" href="#"><svg aria-hidden="true" class="h-6 w-6" fill="currentColor" viewbox="0 0 24 24"><path clip-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" fill-rule="evenodd"></path></svg></a>
+<a class="text-cream/70 hover:text-rose-gold transition-colors" href="#"><svg aria-hidden="true" class="h-6 w-6" fill="currentColor" viewbox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.71v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path></svg></a>
+<a class="text-cream/70 hover:text-rose-gold transition-colors" href="#"><svg aria-hidden="true" class="h-6 w-6" fill="currentColor" viewbox="0 0 24 24"><path clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm3.363 8.363c.276 0 .5.224.5.5v3.272c0 .276-.224.5-.5.5h-1.091v-3.772h1.091zm-2.182 5.454V9.363h-1.091v6.454h1.091zm-2.181-5.454V9.363h-1.091v6.454h1.091zm-2.182-1.636a.818.818 0 100-1.636.818.818 0 000 1.636z" fill-rule="evenodd"></path></svg></a>
+</div>
+<p class="text-sm">instructor@email.com | +1 (234) 567-890</p>
+<p class="text-xs text-cream/50 mt-4">© 2024 Instructor Initials. All Rights Reserved.</p>
+</div>
+</footer>
+</div>
+</body></html>
