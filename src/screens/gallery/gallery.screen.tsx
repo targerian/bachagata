@@ -1,12 +1,23 @@
-import React, { useState } from "react";
-import { FilterChip, ImageGalleryItem } from "@/common/components";
 import { AnimatePresence } from "framer-motion";
+import type React from "react";
+import { useState } from "react";
 import {
   FadeIn,
+  STAGGER_DELAY,
   StaggerContainer,
   StaggerItem,
-  STAGGER_DELAY,
 } from "@/common/animations";
+import {
+  FilterChip,
+  ImageGalleryItem,
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/common/components";
 
 type FilterType = "All" | "Performances" | "Workshops" | "Socials";
 
@@ -130,56 +141,28 @@ export const GalleryScreen: React.FC = () => {
 
       {/* Pagination */}
       <FadeIn>
-        <nav className="flex items-center justify-center p-4">
-        <button
-          className="flex size-10 items-center justify-center text-text-light/60 hover:text-rose-gold"
-          aria-label="Previous page"
-        >
-          <svg
-            className="h-6 w-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-        </button>
-        <button className="flex size-10 items-center justify-center rounded-full bg-rose-gold text-sm font-bold leading-normal tracking-[0.015em] text-background-dark">
-          1
-        </button>
-        <button className="flex size-10 items-center justify-center rounded-full text-sm font-normal leading-normal text-text-light hover:bg-rose-gold/20">
-          2
-        </button>
-        <button className="flex size-10 items-center justify-center rounded-full text-sm font-normal leading-normal text-text-light hover:bg-rose-gold/20">
-          3
-        </button>
-        <span className="flex size-10 items-center justify-center rounded-full text-sm font-normal leading-normal text-text-light">
-          ...
-        </span>
-        <button
-          className="flex size-10 items-center justify-center text-text-light/60 hover:text-rose-gold"
-          aria-label="Next page"
-        >
-          <svg
-            className="h-6 w-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
-        </button>
-      </nav>
+        <Pagination className="p-4">
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink isActive>1</PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink>2</PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink>3</PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </FadeIn>
     </main>
   );

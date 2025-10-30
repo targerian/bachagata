@@ -30,3 +30,13 @@ export type { IconTextProps } from "./IconText";
 
 export { Calendar } from "./Calendar";
 export type { CalendarProps } from "./Calendar";
+
+export {
+  Pagination,
+  PaginationContent,
+  PaginationLink,
+  PaginationItem,
+  PaginationPrevious,
+  PaginationNext,
+  PaginationEllipsis,
+} from "./Pagination";
