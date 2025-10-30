@@ -76,11 +76,16 @@
   --font-serif: "Playfair Display", serif;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   background: linear-gradient(to bottom, #6d1a36 0%, #121212 100%);
   color: var(--text-primary);
   font-family: var(--font-display);
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .dark {

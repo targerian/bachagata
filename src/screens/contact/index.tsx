@@ -142,7 +142,7 @@ export const ContactScreen: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16">
         {/* Contact Info */}
         <SlideIn direction="left" delay={0.2} useInView={false}>
-          <StaggerContainer className="flex flex-col gap-8">
+          <StaggerContainer className="flex flex-col gap-8" useInView={false}>
             {contactInfo.map((info) => (
               <StaggerItem key={info.label}>
                 <IconText

@@ -75,10 +75,10 @@ export const HomeScreen: React.FC = () => {
   ];
 
   return (
-    <main className="flex flex-col items-center">
+    <main className="flex flex-col items-center overflow-x-hidden w-full">
       <div className="w-full max-w-6xl px-6 sm:px-10">
         {/* Hero Section */}
-        <section className="w-full min-h-[calc(100vh-80px)] flex flex-col items-center justify-center text-center py-20 relative">
+        <section className="w-full min-h-[calc(100vh-80px)] flex flex-col items-center justify-center text-center py-20 relative overflow-hidden">
           <div
             className="w-full h-full absolute top-0 left-0 bg-cover bg-no-repeat"
             style={{

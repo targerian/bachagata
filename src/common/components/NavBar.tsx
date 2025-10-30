@@ -34,7 +34,7 @@ export const NavBar: React.FC = () => {
           duration: shouldReduceMotion() ? 0 : ANIMATION_DURATION.normal,
           ease: EASING.easeOut,
         }}
-        className="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-rose-gold/20 bg-background-dark/50 backdrop-blur-md px-6 py-1 md:px-10"
+        className="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-rose-gold/20 bg-background-dark/50 backdrop-blur-md px-6 py-2 md:px-10"
       >
         <Link href="/" className="flex items-center gap-4 text-text-primary">
           <div className="text-rose-gold relative">
@@ -43,7 +43,7 @@ export const NavBar: React.FC = () => {
               alt="Looci Logo"
               width={100}
               height={50}
-              className="object-contain w-[100px] h-[50px]"
+              className="object-contain w-[100px] h-[30px]"
             />
           </div>
           {/* <h2 className="text-text-primary text-xl font-bold leading-tight tracking-[-0.015em]">
