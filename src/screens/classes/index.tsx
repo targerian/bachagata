@@ -6,6 +6,12 @@ import {
   Input,
   Select,
 } from "@/common/components";
+import {
+  FadeIn,
+  SlideIn,
+  StaggerContainer,
+  StaggerItem,
+} from "@/common/animations";
 
 type ClassType = "All" | "Bachata" | "Salsa" | "Chair";
 
@@ -32,41 +38,48 @@ export const ClassesScreen: React.FC = () => {
       {/* Page Heading */}
       <div className="flex flex-wrap justify-between gap-3 p-4">
         <div className="flex min-w-72 flex-col gap-3">
-          <p className="text-text-primary text-4xl md:text-5xl font-serif leading-tight tracking-[-0.033em]">
-            Find Your Rhythm
-          </p>
-          <p className="text-text-secondary text-base font-normal leading-normal">
-            Select a class from the calendar below to begin your booking.
-          </p>
+          <FadeIn direction="up" delay={0.1} useInView={false}>
+            <p className="text-text-primary text-4xl md:text-5xl font-serif leading-tight tracking-[-0.033em]">
+              Find Your Rhythm
+            </p>
+          </FadeIn>
+          <FadeIn delay={0.3} useInView={false}>
+            <p className="text-text-secondary text-base font-normal leading-normal">
+              Select a class from the calendar below to begin your booking.
+            </p>
+          </FadeIn>
         </div>
       </div>
 
       {/* Main Content: Calendar and Booking Form */}
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 p-4">
         {/* Left Column: Calendar */}
-        <div className="flex-1">
+        <SlideIn direction="left" delay={0.2} useInView={false} className="flex-1">
           {/* Filter Chips */}
-          <div className="flex gap-3 p-3 flex-wrap pr-4 mb-4">
+          <StaggerContainer className="flex gap-3 p-3 flex-wrap pr-4 mb-4">
             {filters.map((filter) => (
-              <FilterChip
-                key={filter}
-                active={activeFilter === filter}
-                onClick={() => setActiveFilter(filter)}
-              >
-                {filter}
-              </FilterChip>
+              <StaggerItem key={filter}>
+                <FilterChip
+                  active={activeFilter === filter}
+                  onClick={() => setActiveFilter(filter)}
+                >
+                  {filter}
+                </FilterChip>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
 
           {/* Calendar */}
-          <Calendar
-            selectedDate={selectedDate}
-            onDateSelect={setSelectedDate}
-          />
-        </div>
+          <FadeIn delay={0.4} useInView={false}>
+            <Calendar
+              selectedDate={selectedDate}
+              onDateSelect={setSelectedDate}
+            />
+          </FadeIn>
+        </SlideIn>
 
         {/* Right Column: Booking Form */}
-        <div className="w-full lg:w-2/5 lg:max-w-md">
+        <SlideIn direction="right" delay={0.4} useInView={false} className="w-full lg:w-2/5 lg:max-w-md">
           <h2 className="text-text-primary text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">
             Reserve Your Spot
           </h2>
@@ -116,7 +129,7 @@ export const ClassesScreen: React.FC = () => {
               Join the Dance
             </Button>
           </form>
-        </div>
+        </SlideIn>
       </div>
     </main>
   );

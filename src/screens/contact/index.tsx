@@ -1,5 +1,11 @@
 import type React from "react";
 import {
+  FadeIn,
+  SlideIn,
+  StaggerContainer,
+  StaggerItem,
+} from "@/common/animations";
+import {
   Button,
   GlassCard,
   IconText,
@@ -119,76 +125,91 @@ export const ContactScreen: React.FC = () => {
       {/* Page Heading */}
       <div className="flex flex-wrap justify-center text-center gap-4 p-4">
         <div className="flex flex-col gap-4 max-w-2xl">
-          <h1 className="font-serif text-rose-gold text-5xl md:text-6xl font-bold leading-tight tracking-tight">
-            Let's Dance
-          </h1>
-          <p className="text-text-secondary text-base md:text-lg font-normal leading-normal">
-            Reach out for private lessons, event bookings, or any other
-            inquiries. I'd love to hear from you.
-          </p>
+          <FadeIn direction="up" delay={0.1} useInView={false}>
+            <h1 className="font-serif text-rose-gold text-5xl md:text-6xl font-bold leading-tight tracking-tight">
+              Let's Dance
+            </h1>
+          </FadeIn>
+          <FadeIn delay={0.3} useInView={false}>
+            <p className="text-text-secondary text-base md:text-lg font-normal leading-normal">
+              Reach out for private lessons, event bookings, or any other
+              inquiries. I'd love to hear from you.
+            </p>
+          </FadeIn>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16">
         {/* Contact Info */}
-        <div className="flex flex-col gap-8">
-          {contactInfo.map((info, index) => (
-            <IconText
-              key={info.label}
-              icon={info.icon}
-              label={info.label}
-              value={info.value}
-            />
-          ))}
-          <div className="flex items-center gap-4 pt-4 border-t border-border-color">
-            <p className="text-text-secondary text-sm font-medium">
-              Follow Me:
-            </p>
-            <div className="flex gap-4">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.href}
-                  className="text-text-primary hover:text-rose-gold transition-colors"
-                  aria-label={social.name}
-                >
-                  {social.icon}
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
+        <SlideIn direction="left" delay={0.2} useInView={false}>
+          <StaggerContainer className="flex flex-col gap-8">
+            {contactInfo.map((info) => (
+              <StaggerItem key={info.label}>
+                <IconText
+                  icon={info.icon}
+                  label={info.label}
+                  value={info.value}
+                />
+              </StaggerItem>
+            ))}
+            <FadeIn delay={0.5} useInView={false}>
+              <div className="flex items-center gap-4 pt-4 border-t border-border-color">
+                <p className="text-text-secondary text-sm font-medium">
+                  Follow Me:
+                </p>
+                <div className="flex gap-4">
+                  {socialLinks.map((social) => (
+                    <a
+                      key={social.name}
+                      href={social.href}
+                      className="text-text-primary hover:text-rose-gold transition-colors"
+                      aria-label={social.name}
+                    >
+                      {social.icon}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </FadeIn>
+          </StaggerContainer>
+        </SlideIn>
 
         {/* Contact Form */}
-        <GlassCard className="p-8">
-          <h2 className="text-text-primary text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">
-            Send an Inquiry
-          </h2>
-          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-            <div className="flex flex-col gap-6 md:flex-row">
-              <Input label="Name" placeholder="Enter your full name" required />
+        <SlideIn direction="right" delay={0.4} useInView={false}>
+          <GlassCard className="p-8">
+            <h2 className="text-text-primary text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">
+              Send an Inquiry
+            </h2>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+              <div className="flex flex-col gap-6 md:flex-row">
+                <Input
+                  label="Name"
+                  placeholder="Enter your full name"
+                  required
+                />
+                <Input
+                  label="Email"
+                  type="email"
+                  placeholder="your.email@example.com"
+                  required
+                />
+              </div>
               <Input
-                label="Email"
-                type="email"
-                placeholder="your.email@example.com"
+                label="Subject"
+                placeholder="e.g., Private Lessons Inquiry"
                 required
               />
-            </div>
-            <Input
-              label="Subject"
-              placeholder="e.g., Private Lessons Inquiry"
-              required
-            />
-            <Textarea
-              label="Message"
-              placeholder="Tell me more about what you're looking for..."
-              required
-            />
-            <Button type="submit" size="lg" className="w-full mt-2">
-              Send Message
-            </Button>
-          </form>
-        </GlassCard>
+              <Textarea
+                label="Message"
+                placeholder="Tell me more about what you're looking for..."
+                required
+              />
+              <Button type="submit" size="lg" className="w-full mt-2">
+                Send Message
+              </Button>
+            </form>
+          </GlassCard>
+        </SlideIn>
       </div>
     </main>
   );

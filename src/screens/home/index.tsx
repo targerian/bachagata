@@ -1,5 +1,12 @@
 import Image from "next/image";
 import type React from "react";
+import {
+  FadeIn,
+  ScaleIn,
+  SlideIn,
+  StaggerContainer,
+  StaggerItem,
+} from "@/common/animations";
 import { Button, ClassCard, TestimonialCard } from "@/common/components";
 
 export const HomeScreen: React.FC = () => {
@@ -81,24 +88,30 @@ export const HomeScreen: React.FC = () => {
             }}
           />
           <div className="relative z-10 flex flex-col gap-6 items-center">
-            <h1 className="font-serif text-text-primary/60 text-5xl md:text-7xl lg:text-8xl font-bold">
-              Feel the Rhythm, Find Your Passion
-            </h1>
-            <p className="text-text-primary/70 text-base md:text-lg max-w-2xl">
-              Transform your dance, one step at a time. Join a community of
-              dancers and discover the joy of bachata.
-            </p>
-            <Button size="lg" className="mt-4">
-              Book Now
-            </Button>
+            <FadeIn direction="up" delay={0.2} useInView={false}>
+              <h1 className="font-serif text-text-primary text-5xl md:text-7xl lg:text-8xl font-bold">
+                Feel the Rhythm, Find Your Passion
+              </h1>
+            </FadeIn>
+            <FadeIn direction="up" delay={0.4} useInView={false}>
+              <p className="text-text-primary text-base md:text-lg max-w-2xl">
+                Transform your dance, one step at a time. Join a community of
+                dancers and discover the joy of bachata.
+              </p>
+            </FadeIn>
+            <ScaleIn delay={0.6} useInView={false}>
+              <Button size="lg" className="mt-4">
+                Book Now
+              </Button>
+            </ScaleIn>
           </div>
         </section>
 
         {/* Instructor Introduction Section */}
         <section className="py-24" id="about">
           <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
-            <div className="w-full md:w-1/3">
-              <div className="relative aspect-[3/4] rounded-xl shadow-2xl overflow-hidden">
+            <SlideIn direction="left" delay={0.1} className="w-full md:w-1/3">
+              <div className="relative aspect-3/4 rounded-xl shadow-2xl overflow-hidden">
                 <Image
                   src="/images/lucy/20251009_180329.jpg"
                   alt="Looci - Professional bachata instructor"
@@ -107,8 +120,12 @@ export const HomeScreen: React.FC = () => {
                   priority
                 />
               </div>
-            </div>
-            <div className="flex flex-col gap-4 w-full md:w-2/3">
+            </SlideIn>
+            <SlideIn
+              direction="right"
+              delay={0.3}
+              className="flex flex-col gap-4 w-full md:w-2/3"
+            >
               <h2 className="text-text-primary text-3xl md:text-4xl font-bold leading-tight tracking-[-0.015em] font-serif">
                 Meet Your Instructor
               </h2>
@@ -123,50 +140,64 @@ export const HomeScreen: React.FC = () => {
                 beginners to advanced dancers. Let's dance together and create
                 unforgettable memories on the dance floor.
               </p>
-            </div>
+            </SlideIn>
           </div>
         </section>
 
         {/* Class Offerings Section */}
         <section className="py-24" id="classes">
-          <div className="text-center mb-12">
-            <h2 className="text-text-primary text-3xl md:text-4xl font-bold leading-tight tracking-[-0.015em] font-serif">
-              Class Offerings
-            </h2>
-            <p className="text-text-secondary mt-2 max-w-xl mx-auto">
-              Explore the variety of classes designed to ignite your passion for
-              dance.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {classes.map((classItem, index) => (
-              <ClassCard
-                key={index}
-                icon={classItem.icon}
-                title={classItem.title}
-                description={classItem.description}
-              />
+          <FadeIn direction="up">
+            <div className="text-center mb-12">
+              <h2 className="text-text-primary text-3xl md:text-4xl font-bold leading-tight tracking-[-0.015em] font-serif">
+                Class Offerings
+              </h2>
+              <p className="text-text-secondary mt-2 max-w-xl mx-auto">
+                Explore the variety of classes designed to ignite your passion
+                for dance.
+              </p>
+            </div>
+          </FadeIn>
+          <StaggerContainer
+            staggerDelay={0.15}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          >
+            {classes.map((classItem) => (
+              <StaggerItem key={classItem.title} className="h-full">
+                <ClassCard
+                  icon={classItem.icon}
+                  title={classItem.title}
+                  description={classItem.description}
+                  className="h-full"
+                />
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </section>
 
         {/* Testimonials Section */}
         <section className="py-24" id="testimonials">
-          <div className="text-center mb-12">
-            <h2 className="text-text-primary text-3xl md:text-4xl font-bold leading-tight tracking-[-0.015em] font-serif">
-              What My Students Say
-            </h2>
-          </div>
-          <div className="flex flex-col md:flex-row gap-8">
-            {testimonials.map((testimonial, index) => (
-              <TestimonialCard
-                key={index}
-                rating={testimonial.rating}
-                quote={testimonial.quote}
-                author={testimonial.author}
-              />
+          <FadeIn direction="up">
+            <div className="text-center mb-12">
+              <h2 className="text-text-primary text-3xl md:text-4xl font-bold leading-tight tracking-[-0.015em] font-serif">
+                What My Students Say
+              </h2>
+            </div>
+          </FadeIn>
+          <StaggerContainer
+            staggerDelay={0.2}
+            className="flex flex-col md:flex-row gap-8"
+          >
+            {testimonials.map((testimonial) => (
+              <StaggerItem key={testimonial.author} className="flex">
+                <TestimonialCard
+                  rating={testimonial.rating}
+                  quote={testimonial.quote}
+                  author={testimonial.author}
+                  className="flex-1"
+                />
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </section>
       </div>
     </main>

@@ -1,5 +1,12 @@
 import React, { useState } from "react";
 import { FilterChip, ImageGalleryItem } from "@/common/components";
+import { AnimatePresence } from "framer-motion";
+import {
+  FadeIn,
+  StaggerContainer,
+  StaggerItem,
+  STAGGER_DELAY,
+} from "@/common/animations";
 
 type FilterType = "All" | "Performances" | "Workshops" | "Socials";
 
@@ -58,55 +65,72 @@ export const GalleryScreen: React.FC = () => {
           }}
         >
           <div className="flex flex-col gap-2">
-            <h1 className="font-serif text-5xl font-black leading-tight tracking-normal text-white md:text-7xl">
-              Capturing the Moment
-            </h1>
-            <h2 className="text-base font-normal leading-normal text-text-light md:text-lg">
-              Explore the passion, connection, and elegance of bachata through
-              our gallery.
-            </h2>
+            <FadeIn direction="up" delay={0.2} useInView={false}>
+              <h1 className="font-serif text-5xl font-black leading-tight tracking-normal text-white md:text-7xl">
+                Capturing the Moment
+              </h1>
+            </FadeIn>
+            <FadeIn delay={0.4} useInView={false}>
+              <h2 className="text-base font-normal leading-normal text-text-light md:text-lg">
+                Explore the passion, connection, and elegance of bachata through
+                our gallery.
+              </h2>
+            </FadeIn>
           </div>
         </div>
       </section>
 
       {/* Filters */}
       <section className="mb-8 flex justify-center">
-        <div className="flex flex-wrap justify-center gap-3">
+        <StaggerContainer
+          staggerDelay={STAGGER_DELAY.fast}
+          className="flex flex-wrap justify-center gap-3"
+        >
           {filters.map((filter) => (
-            <FilterChip
-              key={filter}
-              active={activeFilter === filter}
-              onClick={() => setActiveFilter(filter)}
-            >
-              {filter}
-            </FilterChip>
+            <StaggerItem key={filter}>
+              <FilterChip
+                active={activeFilter === filter}
+                onClick={() => setActiveFilter(filter)}
+              >
+                {filter}
+              </FilterChip>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </section>
 
       {/* Image Grid */}
       <section className="mb-12 md:mb-20">
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-          {filteredImages.map((image, index) => (
-            <ImageGalleryItem
-              key={`${image.src}-${index}`}
-              src={image.src}
-              alt={image.alt}
-              aspectRatio={image.aspectRatio}
-              className={
-                index === 0
-                  ? "col-span-1 row-span-2"
-                  : index === 4
-                    ? "col-span-2 md:col-span-1"
-                    : ""
-              }
-            />
-          ))}
-        </div>
+        <StaggerContainer
+          staggerDelay={STAGGER_DELAY.fast}
+          className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4"
+        >
+          <AnimatePresence mode="wait">
+            {filteredImages.map((image, index) => (
+              <StaggerItem
+                key={`${image.src}-${index}-${activeFilter}`}
+                className={
+                  index === 0
+                    ? "col-span-1 row-span-2"
+                    : index === 4
+                      ? "col-span-2 md:col-span-1"
+                      : ""
+                }
+              >
+                <ImageGalleryItem
+                  src={image.src}
+                  alt={image.alt}
+                  aspectRatio={image.aspectRatio}
+                />
+              </StaggerItem>
+            ))}
+          </AnimatePresence>
+        </StaggerContainer>
       </section>
 
       {/* Pagination */}
-      <nav className="flex items-center justify-center p-4">
+      <FadeIn>
+        <nav className="flex items-center justify-center p-4">
         <button
           className="flex size-10 items-center justify-center text-text-light/60 hover:text-rose-gold"
           aria-label="Previous page"
@@ -156,6 +180,7 @@ export const GalleryScreen: React.FC = () => {
           </svg>
         </button>
       </nav>
+      </FadeIn>
     </main>
   );
 };

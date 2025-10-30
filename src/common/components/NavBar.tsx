@@ -1,8 +1,14 @@
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import type React from "react";
 import { useState } from "react";
+import {
+  ANIMATION_DURATION,
+  EASING,
+  shouldReduceMotion,
+} from "@/common/animations";
 import { cn } from "@/lib/utils";
 import { Button } from "./Button";
 
@@ -20,100 +26,146 @@ export const NavBar: React.FC = () => {
   const isActive = (path: string) => router.pathname === path;
 
   return (
-    <header className="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-rose-gold/20 bg-background-dark/50 backdrop-blur-md px-6 py-1 md:px-10">
-      <Link href="/" className="flex items-center gap-4 text-text-primary">
-        <div className="text-rose-gold relative">
-          <Image
-            src="/images/logos/4_20251028_104531_0001.png"
-            alt="Looci Logo"
-            width={100}
-            height={50}
-            className="object-contain w-[100px] h-[50px]"
-          />
-        </div>
-        {/* <h2 className="text-text-primary text-xl font-bold leading-tight tracking-[-0.015em]">
-          Looci
-        </h2> */}
-      </Link>
-
-      {/* Desktop Navigation */}
-      <nav className="hidden items-center gap-8 md:flex flex-1 justify-end">
-        <div className="flex items-center gap-9">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                "text-sm font-medium leading-normal transition-colors",
-                isActive(link.href)
-                  ? "text-rose-gold font-bold"
-                  : "text-text-secondary hover:text-rose-gold",
-              )}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </div>
-        <Button size="md">Book Now</Button>
-      </nav>
-
-      {/* Mobile Menu Button */}
-      <button
-        className="md:hidden text-text-primary"
-        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        aria-label="Toggle menu"
-        type="button"
+    <>
+      <motion.header
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{
+          duration: shouldReduceMotion() ? 0 : ANIMATION_DURATION.normal,
+          ease: EASING.easeOut,
+        }}
+        className="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-rose-gold/20 bg-background-dark/50 backdrop-blur-md px-6 py-1 md:px-10"
       >
-        <svg
-          className="h-6 w-6"
-          aria-hidden="true"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          {mobileMenuOpen ? (
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M6 18L18 6M6 6l12 12"
+        <Link href="/" className="flex items-center gap-4 text-text-primary">
+          <div className="text-rose-gold relative">
+            <Image
+              src="/images/logos/4_20251028_104531_0001.png"
+              alt="Looci Logo"
+              width={100}
+              height={50}
+              className="object-contain w-[100px] h-[50px]"
             />
-          ) : (
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          )}
-        </svg>
-      </button>
+          </div>
+          {/* <h2 className="text-text-primary text-xl font-bold leading-tight tracking-[-0.015em]">
+            Looci
+          </h2> */}
+        </Link>
 
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="absolute top-full left-0 right-0 bg-background-dark/95 backdrop-blur-md border-b border-rose-gold/20 md:hidden">
-          <nav className="flex flex-col p-6 gap-4">
+        {/* Desktop Navigation */}
+        <nav className="hidden items-center gap-8 md:flex flex-1 justify-end">
+          <div className="flex items-center gap-9">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "text-base font-medium leading-normal transition-colors py-2",
+                  "text-sm font-medium leading-normal transition-colors",
                   isActive(link.href)
                     ? "text-rose-gold font-bold"
                     : "text-text-secondary hover:text-rose-gold",
                 )}
-                onClick={() => setMobileMenuOpen(false)}
               >
                 {link.label}
               </Link>
             ))}
-            <Button size="md" className="mt-2">
-              Book Now
-            </Button>
-          </nav>
-        </div>
-      )}
-    </header>
+          </div>
+          <Button size="md">Book Now</Button>
+        </nav>
+
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden text-text-primary"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle menu"
+          type="button"
+        >
+          <svg
+            className="h-6 w-6"
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            {mobileMenuOpen ? (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            ) : (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            )}
+          </svg>
+        </button>
+      </motion.header>
+
+      {/* Mobile Menu - Outside header to avoid transform context issues */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ x: "100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: "100%", opacity: 0 }}
+            transition={{
+              duration: shouldReduceMotion() ? 0 : ANIMATION_DURATION.fast,
+              ease: EASING.easeOut,
+            }}
+            className="fixed top-[73px] left-0 right-0 md:hidden z-100"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(109, 26, 54, 0.98) 0%, rgba(18, 18, 18, 0.98) 100%)",
+              backdropFilter: "blur(20px)",
+              WebkitBackdropFilter: "blur(20px)",
+              boxShadow:
+                "0 8px 32px 0 rgba(183, 110, 121, 0.15), inset 0 1px 0 0 rgba(183, 110, 121, 0.1)",
+              maxHeight: "calc(100vh - 73px)",
+              overflowY: "auto",
+            }}
+          >
+            <div className="border-t border-rose-gold/20" />
+            <nav className="flex flex-col p-8 gap-2">
+              {navLinks.map((link, index) => (
+                <motion.div
+                  key={link.href}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <Link
+                    href={link.href}
+                    className={cn(
+                      "block text-lg font-medium leading-normal transition-all duration-300 py-3 px-4 rounded-lg",
+                      isActive(link.href)
+                        ? "text-text-primary font-bold bg-rose-gold/20 border border-rose-gold/30"
+                        : "text-text-secondary hover:text-text-primary hover:bg-white/5",
+                    )}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                </motion.div>
+              ))}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: navLinks.length * 0.1 }}
+                className="mt-4"
+              >
+                <Button size="lg" className="w-full shadow-lg">
+                  Book Now
+                </Button>
+              </motion.div>
+            </nav>
+            <div className="border-b border-rose-gold/10 mb-4" />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
