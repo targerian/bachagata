@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 import {
   Button,
   GlassCard,
@@ -22,6 +22,7 @@ export const ContactScreen: React.FC = () => {
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
+          aria-hidden="true"
         >
           <path
             strokeLinecap="round"
@@ -41,6 +42,7 @@ export const ContactScreen: React.FC = () => {
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
+          aria-hidden="true"
         >
           <path
             strokeLinecap="round"
@@ -60,6 +62,7 @@ export const ContactScreen: React.FC = () => {
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
+          aria-hidden="true"
         >
           <path
             strokeLinecap="round"
@@ -85,7 +88,12 @@ export const ContactScreen: React.FC = () => {
       name: "Instagram",
       href: "#",
       icon: (
-        <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+        <svg
+          className="h-6 w-6"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
           <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266.058 1.644.07 4.85.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.059-1.281.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98-1.281-.059-1.689-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44 1.441-.645 1.441-1.44-.645-1.44-1.441-1.44z" />
         </svg>
       ),
@@ -94,7 +102,12 @@ export const ContactScreen: React.FC = () => {
       name: "Twitter",
       href: "#",
       icon: (
-        <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+        <svg
+          className="h-6 w-6"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
           <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616v.064c0 2.298 1.634 4.212 3.793 4.649-.65.178-1.336.23-2.04.188.608 1.923 2.366 3.235 4.453 3.272-1.763 1.37-3.973 2.163-6.357 2.163-.414 0-.82-.024-1.22-.074 2.279 1.455 4.981 2.3 7.875 2.3 9.421 0 14.58-7.822 14.53-14.583v-.651c1.001-.72 1.868-1.616 2.557-2.65z" />
         </svg>
       ),
@@ -102,7 +115,7 @@ export const ContactScreen: React.FC = () => {
   ];
 
   return (
-    <main className="flex flex-col gap-16 md:gap-24 py-16 md:py-24 px-4 md:px-20 lg:px-40 max-w-[960px] mx-auto">
+    <main className="flex flex-col gap-16 md:gap-24 py-16 md:py-24 px-4 md:px-10 lg:px-30 max-w-[1200px] mx-auto">
       {/* Page Heading */}
       <div className="flex flex-wrap justify-center text-center gap-4 p-4">
         <div className="flex flex-col gap-4 max-w-2xl">
@@ -116,12 +129,12 @@ export const ContactScreen: React.FC = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-20">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16">
         {/* Contact Info */}
         <div className="flex flex-col gap-8">
           {contactInfo.map((info, index) => (
             <IconText
-              key={index}
+              key={info.label}
               icon={info.icon}
               label={info.label}
               value={info.value}
@@ -147,7 +160,7 @@ export const ContactScreen: React.FC = () => {
         </div>
 
         {/* Contact Form */}
-        <GlassCard>
+        <GlassCard className="p-8">
           <h2 className="text-text-primary text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">
             Send an Inquiry
           </h2>
@@ -171,7 +184,7 @@ export const ContactScreen: React.FC = () => {
               placeholder="Tell me more about what you're looking for..."
               required
             />
-            <Button type="submit" size="lg" className="mt-2">
+            <Button type="submit" size="lg" className="w-full mt-2">
               Send Message
             </Button>
           </form>

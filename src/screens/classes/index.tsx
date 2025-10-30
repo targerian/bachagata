@@ -28,7 +28,7 @@ export const ClassesScreen: React.FC = () => {
   const filters: ClassType[] = ["All", "Bachata", "Salsa", "Chair"];
 
   return (
-    <main className="flex flex-col gap-10 mt-10 md:mt-16 px-4 md:px-20 lg:px-40 max-w-[960px] mx-auto">
+    <main className="flex flex-col gap-10 mt-10 md:mt-16 px-4 md:px-10 lg:px-30 max-w-[1200px] mx-auto">
       {/* Page Heading */}
       <div className="flex flex-wrap justify-between gap-3 p-4">
         <div className="flex min-w-72 flex-col gap-3">
@@ -42,7 +42,7 @@ export const ClassesScreen: React.FC = () => {
       </div>
 
       {/* Main Content: Calendar and Booking Form */}
-      <div className="flex flex-col lg:flex-row gap-12 p-4">
+      <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 p-4">
         {/* Left Column: Calendar */}
         <div className="flex-1">
           {/* Filter Chips */}

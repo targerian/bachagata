@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
+import type React from "react";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "./Button";
 
@@ -19,20 +20,20 @@ export const NavBar: React.FC = () => {
   const isActive = (path: string) => router.pathname === path;
 
   return (
-    <header className="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-rose-gold/20 bg-background-dark/50 backdrop-blur-md px-6 py-4 md:px-10">
+    <header className="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-rose-gold/20 bg-background-dark/50 backdrop-blur-md px-6 py-1 md:px-10">
       <Link href="/" className="flex items-center gap-4 text-text-primary">
-        <div className="w-8 h-8 text-rose-gold relative">
+        <div className="text-rose-gold relative">
           <Image
-            src="/images/logos/Bachagata_20251028_103342_0000.png"
+            src="/images/logos/4_20251028_104531_0001.png"
             alt="Looci Logo"
-            width={32}
-            height={32}
-            className="object-contain"
+            width={100}
+            height={50}
+            className="object-contain w-[100px] h-[50px]"
           />
         </div>
-        <h2 className="text-text-primary text-xl font-bold leading-tight tracking-[-0.015em]">
+        {/* <h2 className="text-text-primary text-xl font-bold leading-tight tracking-[-0.015em]">
           Looci
-        </h2>
+        </h2> */}
       </Link>
 
       {/* Desktop Navigation */}
@@ -61,9 +62,11 @@ export const NavBar: React.FC = () => {
         className="md:hidden text-text-primary"
         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         aria-label="Toggle menu"
+        type="button"
       >
         <svg
           className="h-6 w-6"
+          aria-hidden="true"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"

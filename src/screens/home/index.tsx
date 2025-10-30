@@ -1,5 +1,5 @@
-import React from "react";
 import Image from "next/image";
+import type React from "react";
 import { Button, ClassCard, TestimonialCard } from "@/common/components";
 
 export const HomeScreen: React.FC = () => {
@@ -10,6 +10,7 @@ export const HomeScreen: React.FC = () => {
           className="h-10 w-10 text-rose-gold"
           fill="currentColor"
           viewBox="0 0 24 24"
+          aria-hidden="true"
         >
           <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
         </svg>
@@ -24,6 +25,7 @@ export const HomeScreen: React.FC = () => {
           className="h-10 w-10 text-rose-gold"
           fill="currentColor"
           viewBox="0 0 24 24"
+          aria-hidden="true"
         >
           <path d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
           <path d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z" />
@@ -39,6 +41,7 @@ export const HomeScreen: React.FC = () => {
           className="h-10 w-10 text-rose-gold"
           fill="currentColor"
           viewBox="0 0 24 24"
+          aria-hidden="true"
         >
           <path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V6H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4z" />
         </svg>
@@ -70,17 +73,18 @@ export const HomeScreen: React.FC = () => {
         {/* Hero Section */}
         <section className="w-full min-h-[calc(100vh-80px)] flex flex-col items-center justify-center text-center py-20 relative">
           <div
-            className="w-full h-full absolute top-0 left-0 bg-cover bg-center bg-no-repeat"
+            className="w-full h-full absolute top-0 left-0 bg-cover bg-no-repeat"
             style={{
               backgroundImage:
                 'linear-gradient(to top, rgba(92, 0, 31, 1) 0%, rgba(92, 0, 31, 0.6) 50%, rgba(0, 0, 0, 0.2) 100%), url("/images/lucy/DSC07535.JPG")',
+              backgroundPosition: "center 35%",
             }}
           />
           <div className="relative z-10 flex flex-col gap-6 items-center">
-            <h1 className="font-serif text-text-primary text-5xl md:text-7xl lg:text-8xl font-bold">
+            <h1 className="font-serif text-text-primary/60 text-5xl md:text-7xl lg:text-8xl font-bold">
               Feel the Rhythm, Find Your Passion
             </h1>
-            <p className="text-text-primary text-base md:text-lg max-w-2xl">
+            <p className="text-text-primary/70 text-base md:text-lg max-w-2xl">
               Transform your dance, one step at a time. Join a community of
               dancers and discover the joy of bachata.
             </p>
