@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Plus } from "lucide-react";
 import {
   Button,
-  Calendar,
-  FilterChip,
-  Input,
-  Select,
+  AdminEditToggle,
+  ConfirmDialog,
 } from "@/common/components";
 import {
   FadeIn,
@@ -12,124 +11,172 @@ import {
   StaggerContainer,
   StaggerItem,
 } from "@/common/animations";
+import { supabase, type Class } from "@/lib/supabase";
+import { useAuth } from "@/hooks/useAuth";
+import { ClassListCard, AddClassModal, EditClassModal } from "./components";
 
 type ClassType = "All" | "Bachata" | "Salsa" | "Chair";
 
 export const ClassesScreen: React.FC = () => {
-  const [activeFilter, setActiveFilter] = useState<ClassType>("All");
-  const [selectedDate, setSelectedDate] = useState<Date>();
+  const { isAdmin } = useAuth();
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [classes, setClasses] = useState<Class[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [editingClass, setEditingClass] = useState<Class | null>(null);
+  const [deletingClass, setDeletingClass] = useState<Class | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Booking logic will be added later
-    console.log("Booking submitted");
+  const fetchClasses = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("classes")
+        .select("*")
+        .order("date_time", { ascending: true });
+
+      if (error) throw error;
+      setClasses(data || []);
+    } catch (err) {
+      console.error("Error fetching classes:", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const classOptions = [
-    { value: "bachata-7pm", label: "Sensual Bachata Fundamentals - 7 PM" },
-    { value: "salsa-8pm", label: "Salsa On1 Footwork - 8 PM" },
-    { value: "chair-9pm", label: "Empowerment Chair Dance - 9 PM" },
-  ];
+  useEffect(() => {
+    fetchClasses();
+  }, []);
 
-  const filters: ClassType[] = ["All", "Bachata", "Salsa", "Chair"];
+  const handleDeleteClass = async () => {
+    if (!deletingClass) return;
+
+    try {
+      // Delete image from storage if exists
+      if (deletingClass.image_url) {
+        const fileName = deletingClass.image_url.split("/").pop();
+        if (fileName) {
+          await supabase.storage.from("class-images").remove([fileName]);
+        }
+      }
+
+      // Delete from database
+      const { error } = await supabase
+        .from("classes")
+        .delete()
+        .eq("id", deletingClass.id);
+
+      if (error) throw error;
+
+      await fetchClasses();
+    } catch (err) {
+      console.error("Error deleting class:", err);
+    } finally {
+      setDeletingClass(null);
+    }
+  };
+
+  // Filter upcoming classes (future classes only for non-admin view)
+  const upcomingClasses = isEditMode
+    ? classes
+    : classes.filter((c) => new Date(c.date_time) >= new Date());
 
   return (
     <main className="flex flex-col gap-10 mt-10 md:mt-16 px-4 md:px-10 lg:px-30 max-w-[1200px] mx-auto">
+      {/* Admin Edit Toggle */}
+      {isAdmin && (
+        <AdminEditToggle isEditMode={isEditMode} onToggle={setIsEditMode} />
+      )}
+
+      {/* Add Class Modal */}
+      <AddClassModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onSuccess={fetchClasses}
+      />
+
+      {/* Edit Class Modal */}
+      {editingClass && (
+        <EditClassModal
+          isOpen={true}
+          onClose={() => setEditingClass(null)}
+          onSuccess={fetchClasses}
+          classData={editingClass}
+        />
+      )}
+
+      {/* Delete Confirmation */}
+      <ConfirmDialog
+        isOpen={deletingClass !== null}
+        onClose={() => setDeletingClass(null)}
+        onConfirm={handleDeleteClass}
+        title="Delete Class"
+        message="Are you sure you want to delete this class? This action cannot be undone."
+        confirmText="Delete"
+        isDestructive={true}
+      />
+
       {/* Page Heading */}
-      <div className="flex flex-wrap justify-between gap-3 p-4">
+      <div className="flex flex-wrap justify-between items-start gap-3 p-4">
         <div className="flex min-w-72 flex-col gap-3">
           <FadeIn direction="up" delay={0.1} useInView={false}>
             <p className="text-text-primary text-4xl md:text-5xl font-serif leading-tight tracking-[-0.033em]">
-              Find Your Rhythm
+              Upcoming Classes
             </p>
           </FadeIn>
           <FadeIn delay={0.3} useInView={false}>
             <p className="text-text-secondary text-base font-normal leading-normal">
-              Select a class from the calendar below to begin your booking.
+              {isEditMode
+                ? "Manage your classes - add, edit, or remove classes."
+                : "Browse our upcoming dance classes and book your spot."}
             </p>
           </FadeIn>
         </div>
+
+        {/* Add Class Button (Admin Only) */}
+        {isAdmin && isEditMode && (
+          <FadeIn delay={0.2} useInView={false}>
+            <Button
+              onClick={() => setIsAddModalOpen(true)}
+              size="md"
+              className="flex items-center gap-2"
+            >
+              <Plus className="h-5 w-5" />
+              Add Class
+            </Button>
+          </FadeIn>
+        )}
       </div>
 
-      {/* Main Content: Calendar and Booking Form */}
-      <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 p-4">
-        {/* Left Column: Calendar */}
-        <SlideIn direction="left" delay={0.2} useInView={false} className="flex-1">
-          {/* Filter Chips */}
-          <StaggerContainer className="flex gap-3 p-3 flex-wrap pr-4 mb-4">
-            {filters.map((filter) => (
-              <StaggerItem key={filter}>
-                <FilterChip
-                  active={activeFilter === filter}
-                  onClick={() => setActiveFilter(filter)}
-                >
-                  {filter}
-                </FilterChip>
+      {/* Classes List */}
+      <div className="flex flex-col gap-6 p-4">
+        {loading ? (
+          <div className="flex justify-center items-center min-h-[400px]">
+            <p className="text-text-secondary">Loading classes...</p>
+          </div>
+        ) : upcomingClasses.length === 0 ? (
+          <div className="flex flex-col justify-center items-center min-h-[400px] gap-4">
+            <p className="text-text-secondary text-lg">
+              {isEditMode ? "No classes yet" : "No upcoming classes"}
+            </p>
+            {isAdmin && isEditMode && (
+              <Button onClick={() => setIsAddModalOpen(true)} size="md">
+                Add First Class
+              </Button>
+            )}
+          </div>
+        ) : (
+          <StaggerContainer className="flex flex-col gap-6">
+            {upcomingClasses.map((classData) => (
+              <StaggerItem key={classData.id}>
+                <ClassListCard
+                  classData={classData}
+                  isEditMode={isEditMode}
+                  onEdit={() => setEditingClass(classData)}
+                  onDelete={() => setDeletingClass(classData)}
+                />
               </StaggerItem>
             ))}
           </StaggerContainer>
-
-          {/* Calendar */}
-          <FadeIn delay={0.4} useInView={false}>
-            <Calendar
-              selectedDate={selectedDate}
-              onDateSelect={setSelectedDate}
-            />
-          </FadeIn>
-        </SlideIn>
-
-        {/* Right Column: Booking Form */}
-        <SlideIn direction="right" delay={0.4} useInView={false} className="w-full lg:w-2/5 lg:max-w-md">
-          <h2 className="text-text-primary text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">
-            Reserve Your Spot
-          </h2>
-          <form onSubmit={handleSubmit} className="flex flex-col gap-6 p-4">
-            <Select label="Class Selection" options={classOptions} required />
-
-            <Input
-              label="Full Name"
-              placeholder="Enter your full name"
-              required
-            />
-
-            <Input
-              label="Email Address"
-              type="email"
-              placeholder="Enter your email address"
-              required
-            />
-
-            <div className="flex flex-col gap-2">
-              <label className="text-text-secondary text-sm font-medium">
-                Payment Information
-              </label>
-              <div className="flex items-center gap-3 rounded-lg border-2 border-white/20 bg-white/5 px-4 py-3">
-                <svg
-                  className="h-6 w-6 text-text-secondary"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
-                  />
-                </svg>
-                <input
-                  className="flex-1 bg-transparent text-text-primary placeholder:text-text-secondary/50 focus:outline-none focus:ring-0 border-0 p-0"
-                  placeholder="Card Number"
-                  type="text"
-                />
-              </div>
-            </div>
-
-            <Button type="submit" size="lg" className="mt-4">
-              Join the Dance
-            </Button>
-          </form>
-        </SlideIn>
+        )}
       </div>
     </main>
   );

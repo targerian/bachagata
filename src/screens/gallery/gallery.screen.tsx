@@ -1,6 +1,7 @@
 import { AnimatePresence } from "framer-motion";
+import { Plus } from "lucide-react";
 import type React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FadeIn,
   STAGGER_DELAY,
@@ -8,6 +9,9 @@ import {
   StaggerItem,
 } from "@/common/animations";
 import {
+  AdminEditToggle,
+  Button,
+  ConfirmDialog,
   FilterChip,
   ImageGalleryItem,
   Pagination,
@@ -18,46 +22,72 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/common/components";
+import { useAuth } from "@/hooks/useAuth";
+import { type GalleryImage, supabase } from "@/lib/supabase";
+import { AdminControls, ImageEditModal, ImageUploadModal } from "./components";
 
 type FilterType = "All" | "Performances" | "Workshops" | "Socials";
 
 export const GalleryScreen: React.FC = () => {
+  const { isAdmin } = useAuth();
   const [activeFilter, setActiveFilter] = useState<FilterType>("All");
-
-  const images = [
-    {
-      src: "/images/lucy/DSC07535.JPG",
-      alt: "Looci dancing at a performance",
-      category: "Performances" as FilterType,
-      aspectRatio: "portrait" as const,
-    },
-    {
-      src: "/images/lucy/20251009_180329.jpg",
-      alt: "Looci teaching a workshop",
-      category: "Workshops" as FilterType,
-      aspectRatio: "square" as const,
-    },
-    {
-      src: "/images/lucy/DSC03883.jpg",
-      alt: "Looci at a social dance event",
-      category: "Socials" as FilterType,
-      aspectRatio: "landscape" as const,
-    },
-    {
-      src: "/images/lucy/FB_IMG_1717517803090.jpg",
-      alt: "Looci performing bachata",
-      category: "Performances" as FilterType,
-      aspectRatio: "square" as const,
-    },
-    {
-      src: "/images/lucy/IMG-20241229-WA0001.jpg",
-      alt: "Looci with students",
-      category: "Workshops" as FilterType,
-      aspectRatio: "landscape" as const,
-    },
-  ];
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [images, setImages] = useState<GalleryImage[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  const [editingImage, setEditingImage] = useState<GalleryImage | null>(null);
+  const [deletingImage, setDeletingImage] = useState<GalleryImage | null>(null);
 
   const filters: FilterType[] = ["All", "Performances", "Workshops", "Socials"];
+
+  const fetchImages = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("gallery_images")
+        .select("*")
+        .order("upload_date", { ascending: false });
+
+      if (error) throw error;
+      setImages(data || []);
+    } catch (err) {
+      console.error("Error fetching images:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchImages();
+  }, []);
+
+  const handleDeleteImage = async () => {
+    if (!deletingImage) return;
+
+    try {
+      // Extract file name from URL
+      const fileName = deletingImage.image_url.split("/").pop();
+
+      // Delete from storage
+      if (fileName) {
+        await supabase.storage.from("gallery-images").remove([fileName]);
+      }
+
+      // Delete from database
+      const { error } = await supabase
+        .from("gallery_images")
+        .delete()
+        .eq("id", deletingImage.id);
+
+      if (error) throw error;
+
+      // Refresh images
+      await fetchImages();
+    } catch (err) {
+      console.error("Error deleting image:", err);
+    } finally {
+      setDeletingImage(null);
+    }
+  };
 
   const filteredImages =
     activeFilter === "All"
@@ -66,6 +96,39 @@ export const GalleryScreen: React.FC = () => {
 
   return (
     <main className="w-full flex-1 px-4 py-8 sm:px-6 md:py-16 max-w-6xl mx-auto">
+      {/* Admin Edit Toggle */}
+      {isAdmin && (
+        <AdminEditToggle isEditMode={isEditMode} onToggle={setIsEditMode} />
+      )}
+
+      {/* Upload Modal */}
+      <ImageUploadModal
+        isOpen={isUploadModalOpen}
+        onClose={() => setIsUploadModalOpen(false)}
+        onSuccess={fetchImages}
+      />
+
+      {/* Edit Modal */}
+      {editingImage && (
+        <ImageEditModal
+          isOpen={true}
+          onClose={() => setEditingImage(null)}
+          onSuccess={fetchImages}
+          image={editingImage}
+        />
+      )}
+
+      {/* Delete Confirmation */}
+      <ConfirmDialog
+        isOpen={deletingImage !== null}
+        onClose={() => setDeletingImage(null)}
+        onConfirm={handleDeleteImage}
+        title="Delete Image"
+        message="Are you sure you want to delete this image? This action cannot be undone."
+        confirmText="Delete"
+        isDestructive={true}
+      />
+
       {/* Hero Section */}
       <section className="mb-12 md:mb-20">
         <div
@@ -92,7 +155,7 @@ export const GalleryScreen: React.FC = () => {
       </section>
 
       {/* Filters */}
-      <section className="mb-8 flex justify-center">
+      <section className="mb-8 flex justify-center items-center gap-4">
         <StaggerContainer
           staggerDelay={STAGGER_DELAY.fast}
           className="flex flex-wrap justify-center gap-3"
@@ -108,35 +171,73 @@ export const GalleryScreen: React.FC = () => {
             </StaggerItem>
           ))}
         </StaggerContainer>
+
+        {/* Add Image Button (Admin Only) */}
+        {isAdmin && isEditMode && (
+          <FadeIn delay={0.2} useInView={false}>
+            <Button
+              onClick={() => setIsUploadModalOpen(true)}
+              size="md"
+              className="flex items-center gap-2"
+            >
+              <Plus className="h-5 w-5" />
+              Add Image
+            </Button>
+          </FadeIn>
+        )}
       </section>
 
       {/* Image Grid */}
       <section className="mb-12 md:mb-20">
-        <StaggerContainer
-          staggerDelay={STAGGER_DELAY.fast}
-          className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4"
-        >
-          <AnimatePresence mode="wait">
-            {filteredImages.map((image, index) => (
-              <StaggerItem
-                key={`${image.src}-${index}-${activeFilter}`}
-                className={
-                  index === 0
-                    ? "col-span-1 row-span-2"
-                    : index === 4
-                      ? "col-span-2 md:col-span-1"
-                      : ""
-                }
-              >
-                <ImageGalleryItem
-                  src={image.src}
-                  alt={image.alt}
-                  aspectRatio={image.aspectRatio}
-                />
-              </StaggerItem>
-            ))}
-          </AnimatePresence>
-        </StaggerContainer>
+        {loading ? (
+          <div className="flex justify-center items-center min-h-[400px]">
+            <p className="text-text-secondary">Loading images...</p>
+          </div>
+        ) : filteredImages.length === 0 ? (
+          <div className="flex flex-col justify-center items-center min-h-[400px] gap-4">
+            <p className="text-text-secondary text-lg">No images found</p>
+            {isAdmin && isEditMode && (
+              <Button onClick={() => setIsUploadModalOpen(true)} size="md">
+                Upload First Image
+              </Button>
+            )}
+          </div>
+        ) : (
+          <StaggerContainer
+            staggerDelay={STAGGER_DELAY.fast}
+            className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4"
+          >
+            <AnimatePresence mode="wait">
+              {filteredImages.map((image, index) => (
+                <StaggerItem
+                  key={`${image.id}-${activeFilter}`}
+                  className={
+                    index === 0
+                      ? "col-span-1 row-span-2"
+                      : index === 4
+                        ? "col-span-2 md:col-span-1"
+                        : ""
+                  }
+                >
+                  <div className="relative">
+                    {isAdmin && isEditMode && (
+                      <AdminControls
+                        image={image}
+                        onEdit={() => setEditingImage(image)}
+                        onDelete={() => setDeletingImage(image)}
+                      />
+                    )}
+                    <ImageGalleryItem
+                      src={image.image_url}
+                      alt={image.title}
+                      aspectRatio="portrait"
+                    />
+                  </div>
+                </StaggerItem>
+              ))}
+            </AnimatePresence>
+          </StaggerContainer>
+        )}
       </section>
 
       {/* Pagination */}
