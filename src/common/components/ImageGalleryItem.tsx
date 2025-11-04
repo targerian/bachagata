@@ -7,6 +7,7 @@ export interface ImageGalleryItemProps {
   alt: string;
   className?: string;
   aspectRatio?: "square" | "portrait" | "landscape";
+  fillHeight?: boolean;
 }
 
 export const ImageGalleryItem: React.FC<ImageGalleryItemProps> = ({
@@ -14,6 +15,7 @@ export const ImageGalleryItem: React.FC<ImageGalleryItemProps> = ({
   alt,
   className,
   aspectRatio = "square",
+  fillHeight = false,
 }) => {
   const aspectRatioClasses = {
     square: "aspect-square",
@@ -22,11 +24,11 @@ export const ImageGalleryItem: React.FC<ImageGalleryItemProps> = ({
   };
 
   return (
-    <div className={cn("group relative overflow-hidden rounded-xl", className)}>
+    <div className={cn("group relative overflow-hidden rounded-xl", fillHeight && "h-full", className)}>
       <div
         className={cn(
           "w-full transform bg-cover bg-center bg-no-repeat transition-transform duration-300 ease-in-out group-hover:scale-105",
-          aspectRatioClasses[aspectRatio],
+          fillHeight ? "h-full" : aspectRatioClasses[aspectRatio],
         )}
       >
         <Image

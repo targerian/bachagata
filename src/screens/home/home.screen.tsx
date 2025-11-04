@@ -83,7 +83,7 @@ export const HomeScreen: React.FC = () => {
             className="w-full h-full absolute top-0 left-0 bg-cover bg-no-repeat"
             style={{
               backgroundImage:
-                'linear-gradient(to top, rgba(92, 0, 31, 1) 0%, rgba(92, 0, 31, 0.6) 50%, rgba(0, 0, 0, 0.2) 100%), url("/images/lucy/DSC07535.JPG")',
+                'linear-gradient(to top, rgba(92, 0, 31, 1) 0%, rgba(92, 0, 31, 0.6) 50%, rgba(0, 0, 0, 0.2) 100%), url("/images/lucy/hero.webp")',
               backgroundPosition: "center 35%",
             }}
           />
@@ -113,7 +113,7 @@ export const HomeScreen: React.FC = () => {
             <SlideIn direction="left" delay={0.1} className="w-full md:w-1/3">
               <div className="relative aspect-3/4 rounded-xl shadow-2xl overflow-hidden">
                 <Image
-                  src="/images/lucy/20251009_180329.jpg"
+                  src="/images/lucy/about-looci.webp"
                   alt="Looci - Professional bachata instructor"
                   fill
                   className="object-cover"

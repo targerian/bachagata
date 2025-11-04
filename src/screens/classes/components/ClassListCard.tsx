@@ -1,13 +1,13 @@
-import type React from "react";
 import { motion } from "framer-motion";
-import { MapPin, Clock, DollarSign, Edit2, Trash2 } from "lucide-react";
-import type { Class } from "@/lib/supabase";
+import { Clock, DollarSign, Edit2, MapPin, Trash2 } from "lucide-react";
+import type React from "react";
 import { Button } from "@/common/components";
-import {
-  createWhatsAppEnquiryUrl,
-  createWhatsAppBookingUrl,
-} from "@/lib/whatsapp";
 import { useContactInfo } from "@/hooks/useContactInfo";
+import type { Class } from "@/lib/supabase";
+import {
+  createWhatsAppBookingUrl,
+  createWhatsAppEnquiryUrl,
+} from "@/lib/whatsapp";
 
 export interface ClassListCardProps {
   classData: Class;
@@ -55,7 +55,7 @@ export const ClassListCard: React.FC<ClassListCardProps> = ({
         {/* Image */}
         <div className="w-full md:w-48 h-48 flex-shrink-0">
           <img
-            src={classData.image_url || "/images/lucy/DSC07535.JPG"}
+            src={classData.image_url || "/images/lucy/hero.webp"}
             alt={classData.name}
             className="w-full h-full object-cover rounded-lg"
           />
@@ -69,7 +69,8 @@ export const ClassListCard: React.FC<ClassListCardProps> = ({
                 {classData.name}
               </h3>
               <p className="text-text-secondary text-sm mb-2">
-                {formatDate(classData.date_time)} at {formatTime(classData.date_time)}
+                {formatDate(classData.date_time)} at{" "}
+                {formatTime(classData.date_time)}
               </p>
               {classData.is_recurring && (
                 <span className="inline-block px-3 py-1 bg-rose-gold/20 text-rose-gold text-xs font-medium rounded-full">
@@ -161,4 +162,3 @@ export const ClassListCard: React.FC<ClassListCardProps> = ({
     </motion.div>
   );
 };
-
