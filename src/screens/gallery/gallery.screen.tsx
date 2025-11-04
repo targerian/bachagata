@@ -11,6 +11,7 @@ import {
   Button,
   ConfirmDialog,
   FilterChip,
+  GallerySkeleton,
   ImageGalleryItem,
   Pagination,
   PaginationContent,
@@ -246,8 +247,10 @@ export const GalleryScreen: React.FC = () => {
       {/* Image Grid */}
       <section className="mb-12 md:mb-20">
         {loading ? (
-          <div className="flex justify-center items-center min-h-[400px]">
-            <p className="text-text-secondary">Loading images...</p>
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+            {Array.from({ length: 12 }).map((_, i) => (
+              <GallerySkeleton key={`gallery-skeleton-${i}-${Math.random()}`} />
+            ))}
           </div>
         ) : paginatedImages.length === 0 ? (
           <div className="flex flex-col justify-center items-center min-h-[400px] gap-4">

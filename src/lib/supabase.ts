@@ -54,3 +54,12 @@ export type ContactInfo = {
   updated_at: string;
   updated_by?: string;
 };
+
+export type Testimonial = {
+  id: string;
+  name: string;
+  rating: number;
+  testimonial: string;
+  is_approved: boolean;
+  created_at: string;
+};

@@ -188,6 +188,59 @@ ALTER TABLE contact_info ADD COLUMN IF NOT EXISTS facebook_url TEXT;
 UPDATE contact_info SET facebook_url = '#' WHERE facebook_url IS NULL;
 
 -- =====================================================
+-- MIGRATION 6: Testimonials Table
+-- =====================================================
+
+-- Create testimonials table
+CREATE TABLE IF NOT EXISTS testimonials (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  rating INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5),
+  testimonial TEXT NOT NULL,
+  is_approved BOOLEAN NOT NULL DEFAULT false,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- Enable RLS
+ALTER TABLE testimonials ENABLE ROW LEVEL SECURITY;
+
+-- Drop existing policies if they exist
+DROP POLICY IF EXISTS "Allow public to insert testimonials" ON testimonials;
+DROP POLICY IF EXISTS "Allow public to read approved testimonials" ON testimonials;
+DROP POLICY IF EXISTS "Allow authenticated users to read all" ON testimonials;
+DROP POLICY IF EXISTS "Allow authenticated users to update" ON testimonials;
+DROP POLICY IF EXISTS "Allow authenticated users to delete" ON testimonials;
+
+-- Allow public to insert testimonials (submissions)
+CREATE POLICY "Allow public to insert testimonials" ON testimonials
+  FOR INSERT
+  WITH CHECK (true);
+
+-- Allow public to read only approved testimonials
+CREATE POLICY "Allow public to read approved testimonials" ON testimonials
+  FOR SELECT
+  USING (is_approved = true);
+
+-- Allow authenticated admin users to read all testimonials
+CREATE POLICY "Allow authenticated users to read all" ON testimonials
+  FOR SELECT
+  USING (auth.uid() IS NOT NULL);
+
+-- Allow authenticated admin users to update testimonials
+CREATE POLICY "Allow authenticated users to update" ON testimonials
+  FOR UPDATE
+  USING (auth.uid() IS NOT NULL);
+
+-- Allow authenticated admin users to delete testimonials
+CREATE POLICY "Allow authenticated users to delete" ON testimonials
+  FOR DELETE
+  USING (auth.uid() IS NOT NULL);
+
+-- Create indexes for faster queries
+CREATE INDEX IF NOT EXISTS idx_testimonials_approved ON testimonials(is_approved, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_testimonials_rating ON testimonials(rating);
+
+-- =====================================================
 -- DONE! All tables and policies created
 -- =====================================================
 

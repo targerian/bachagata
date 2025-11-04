@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type React from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   FadeIn,
   ScaleIn,
@@ -7,9 +8,107 @@ import {
   StaggerContainer,
   StaggerItem,
 } from "@/common/animations";
-import { Button, ClassCard, TestimonialCard } from "@/common/components";
+import {
+  AdminEditToggle,
+  Button,
+  ClassCard,
+  ConfirmDialog,
+  OverallRating,
+  TestimonialCard,
+  TestimonialSkeleton,
+} from "@/common/components";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase, type Testimonial } from "@/lib/supabase";
+import { AddTestimonialModal, TestimonialAdminControls } from "./components";
 
 export const HomeScreen: React.FC = () => {
+  const { isAdmin } = useAuth();
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [deletingTestimonial, setDeletingTestimonial] =
+    useState<Testimonial | null>(null);
+
+  const fetchTestimonials = useCallback(async () => {
+    try {
+      let query = supabase
+        .from("testimonials")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      // In edit mode, show all testimonials; otherwise only approved 4+ star testimonials
+      if (!isEditMode) {
+        query = query.eq("is_approved", true).gte("rating", 4);
+      }
+
+      const { data, error } = await query;
+
+      if (error) throw error;
+      setTestimonials(data || []);
+    } catch (err) {
+      console.error("Error fetching testimonials:", err);
+    } finally {
+      setLoading(false);
+    }
+  }, [isEditMode]);
+
+  useEffect(() => {
+    fetchTestimonials();
+  }, [fetchTestimonials]);
+
+  const handleApprove = async (id: string) => {
+    try {
+      const { error } = await supabase
+        .from("testimonials")
+        .update({ is_approved: true })
+        .eq("id", id);
+
+      if (error) throw error;
+      await fetchTestimonials();
+    } catch (err) {
+      console.error("Error approving testimonial:", err);
+    }
+  };
+
+  const handleReject = async (id: string) => {
+    try {
+      const { error } = await supabase
+        .from("testimonials")
+        .update({ is_approved: false })
+        .eq("id", id);
+
+      if (error) throw error;
+      await fetchTestimonials();
+    } catch (err) {
+      console.error("Error rejecting testimonial:", err);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!deletingTestimonial) return;
+
+    try {
+      const { error } = await supabase
+        .from("testimonials")
+        .delete()
+        .eq("id", deletingTestimonial.id);
+
+      if (error) throw error;
+      await fetchTestimonials();
+    } catch (err) {
+      console.error("Error deleting testimonial:", err);
+    } finally {
+      setDeletingTestimonial(null);
+    }
+  };
+
+  // Calculate average rating
+  const averageRating =
+    testimonials.length > 0
+      ? testimonials.reduce((sum, t) => sum + t.rating, 0) / testimonials.length
+      : 0;
+
   const classes = [
     {
       icon: (
@@ -59,24 +158,28 @@ export const HomeScreen: React.FC = () => {
     },
   ];
 
-  const testimonials = [
-    {
-      rating: 5,
-      quote:
-        "The best dance instructor I've ever had! Looci's passion is contagious, and the classes are so much fun. I've improved more in a few months than I did in years elsewhere.",
-      author: "Jessica L.",
-    },
-    {
-      rating: 5,
-      quote:
-        "A wonderfully patient and clear teacher. Looci breaks down complex moves in a way that's easy to understand. The atmosphere is always supportive and welcoming.",
-      author: "Michael B.",
-    },
-  ];
+  // Calculate counts for admin
+  const pendingCount = testimonials.filter((t) => !t.is_approved).length;
+  const approvedCount = testimonials.filter((t) => t.is_approved).length;
 
   return (
     <main className="flex flex-col items-center overflow-x-hidden w-full">
       <div className="w-full max-w-6xl px-6 sm:px-10">
+        {/* Admin Edit Toggle */}
+        {isAdmin && (
+          <AdminEditToggle isEditMode={isEditMode} onToggle={setIsEditMode} />
+        )}
+
+        {/* Delete Confirmation */}
+        <ConfirmDialog
+          isOpen={deletingTestimonial !== null}
+          onClose={() => setDeletingTestimonial(null)}
+          onConfirm={handleDelete}
+          title="Delete Testimonial"
+          message="Are you sure you want to delete this testimonial? This action cannot be undone."
+          confirmText="Delete"
+          isDestructive={true}
+        />
         {/* Hero Section */}
         <section className="w-full min-h-[calc(100vh-80px)] flex flex-col items-center justify-center text-center py-20 relative overflow-hidden">
           <div
@@ -176,28 +279,115 @@ export const HomeScreen: React.FC = () => {
 
         {/* Testimonials Section */}
         <section className="py-24" id="testimonials">
+          {/* Add Testimonial Modal */}
+          <AddTestimonialModal
+            isOpen={isAddModalOpen}
+            onClose={() => setIsAddModalOpen(false)}
+            onSuccess={fetchTestimonials}
+          />
+
           <FadeIn direction="up">
             <div className="text-center mb-12">
               <h2 className="text-text-primary text-3xl md:text-4xl font-bold leading-tight tracking-[-0.015em] font-serif">
                 What My Students Say
               </h2>
+              {isEditMode && (
+                <p className="text-text-secondary text-sm mt-2">
+                  {pendingCount} pending · {approvedCount} approved
+                </p>
+              )}
             </div>
           </FadeIn>
-          <StaggerContainer
-            staggerDelay={0.2}
-            className="flex flex-col md:flex-row gap-8"
-          >
-            {testimonials.map((testimonial) => (
-              <StaggerItem key={testimonial.author} className="flex">
-                <TestimonialCard
-                  rating={testimonial.rating}
-                  quote={testimonial.quote}
-                  author={testimonial.author}
-                  className="flex-1"
-                />
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
+
+          {/* Overall Rating - only show in non-edit mode */}
+          {!isEditMode && testimonials.length > 0 && (
+            <FadeIn delay={0.2}>
+              <OverallRating
+                averageRating={averageRating}
+                totalReviews={testimonials.length}
+                className="mb-12"
+              />
+            </FadeIn>
+          )}
+
+          {/* Testimonials Grid */}
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <TestimonialSkeleton key={`skeleton-${i}-${Math.random()}`} />
+              ))}
+            </div>
+          ) : testimonials.length === 0 ? (
+            <FadeIn>
+              <div className="flex flex-col items-center justify-center gap-6 py-12">
+                <p className="text-text-secondary text-center max-w-md">
+                  Be the first to share your experience! Your feedback helps
+                  others discover the joy of dance.
+                </p>
+                <Button onClick={() => setIsAddModalOpen(true)} size="lg">
+                  Share Your Experience
+                </Button>
+              </div>
+            </FadeIn>
+          ) : (
+            <>
+              <StaggerContainer
+                staggerDelay={0.2}
+                className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8"
+              >
+                {testimonials.map((testimonial) => (
+                  <StaggerItem key={testimonial.id} className="flex">
+                    <div className="relative flex-1">
+                      {/* Admin Controls */}
+                      {isAdmin && isEditMode && (
+                        <TestimonialAdminControls
+                          testimonial={testimonial}
+                          onApprove={() => handleApprove(testimonial.id)}
+                          onReject={() => handleReject(testimonial.id)}
+                          onDelete={() => setDeletingTestimonial(testimonial)}
+                        />
+                      )}
+
+                      {/* Status Badge in Edit Mode */}
+                      {isEditMode && (
+                        <div className="absolute top-2 left-2 z-10">
+                          <span
+                            className={`inline-block px-3 py-1 text-xs font-medium rounded-full ${
+                              testimonial.is_approved
+                                ? "bg-green-500/20 text-green-400"
+                                : "bg-yellow-500/20 text-yellow-400"
+                            }`}
+                          >
+                            {testimonial.is_approved ? "Approved" : "Pending"}
+                          </span>
+                        </div>
+                      )}
+
+                      <TestimonialCard
+                        rating={testimonial.rating}
+                        quote={testimonial.testimonial}
+                        author={testimonial.name}
+                        className="flex-1"
+                      />
+                    </div>
+                  </StaggerItem>
+                ))}
+              </StaggerContainer>
+
+              {/* Add Testimonial Button */}
+              <FadeIn delay={0.6}>
+                <div className="flex justify-center">
+                  <Button
+                    onClick={() => setIsAddModalOpen(true)}
+                    size="lg"
+                    variant="outline"
+                  >
+                    Share Your Experience
+                  </Button>
+                </div>
+              </FadeIn>
+            </>
+          )}
         </section>
       </div>
     </main>

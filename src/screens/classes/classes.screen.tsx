@@ -7,7 +7,7 @@ import {
   StaggerContainer,
   StaggerItem,
 } from "@/common/animations";
-import { AdminEditToggle, Button, ConfirmDialog } from "@/common/components";
+import { AdminEditToggle, Button, ConfirmDialog, ClassSkeleton } from "@/common/components";
 import { useAuth } from "@/hooks/useAuth";
 import { type Class, supabase } from "@/lib/supabase";
 import { AddClassModal, ClassListCard, EditClassModal } from "./components";
@@ -145,8 +145,10 @@ export const ClassesScreen: React.FC = () => {
       {/* Classes List */}
       <div className="flex flex-col gap-6 p-4">
         {loading ? (
-          <div className="flex justify-center items-center min-h-[400px]">
-            <p className="text-text-secondary">Loading classes...</p>
+          <div className="flex flex-col gap-6">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <ClassSkeleton key={`class-skeleton-${i}-${Math.random()}`} />
+            ))}
           </div>
         ) : upcomingClasses.length === 0 ? (
           <div className="flex flex-col justify-center items-center min-h-[400px] gap-4">

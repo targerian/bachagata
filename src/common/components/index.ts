@@ -19,11 +19,23 @@ export { Footer } from "./Footer";
 export { ClassCard } from "./ClassCard";
 export type { ClassCardProps } from "./ClassCard";
 
+export { ClassSkeleton } from "./ClassSkeleton";
+
 export { TestimonialCard } from "./TestimonialCard";
 export type { TestimonialCardProps } from "./TestimonialCard";
 
+export { TestimonialSkeleton } from "./TestimonialSkeleton";
+
+export { Rating } from "./Rating";
+export type { RatingProps } from "./Rating";
+
+export { OverallRating } from "./OverallRating";
+export type { OverallRatingProps } from "./OverallRating";
+
 export { ImageGalleryItem } from "./ImageGalleryItem";
 export type { ImageGalleryItemProps } from "./ImageGalleryItem";
+
+export { GallerySkeleton } from "./GallerySkeleton";
 
 export { IconText } from "./IconText";
 export type { IconTextProps } from "./IconText";
