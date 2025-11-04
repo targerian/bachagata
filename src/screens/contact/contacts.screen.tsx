@@ -1,12 +1,7 @@
 import type React from "react";
 import { useState } from "react";
 import { Instagram, Twitter, Facebook } from "lucide-react";
-import {
-  FadeIn,
-  SlideIn,
-  StaggerContainer,
-  StaggerItem,
-} from "@/common/animations";
+import { FadeIn, SlideIn } from "@/common/animations";
 import {
   AdminEditToggle,
   Button,
@@ -190,15 +185,15 @@ export const ContactScreen: React.FC = () => {
                 </Button>
               </div>
             )}
-            <StaggerContainer className="flex flex-col gap-8" useInView={false}>
-              {contactInfoItems.map((info) => (
-                <StaggerItem key={info.label}>
+            <div className="flex flex-col gap-8">
+              {contactInfoItems.map((info, index) => (
+                <FadeIn key={info.label} delay={index * 0.1} useInView={false}>
                   <IconText
                     icon={info.icon}
                     label={info.label}
                     value={info.value}
                   />
-                </StaggerItem>
+                </FadeIn>
               ))}
               {socialLinks.length > 0 && (
                 <FadeIn delay={0.5} useInView={false}>
@@ -221,7 +216,7 @@ export const ContactScreen: React.FC = () => {
                   </div>
                 </FadeIn>
               )}
-            </StaggerContainer>
+            </div>
           </div>
         </SlideIn>
 

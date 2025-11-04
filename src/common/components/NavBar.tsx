@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
+import { Cat } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -9,8 +10,9 @@ import {
   EASING,
   shouldReduceMotion,
 } from "@/common/animations";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Button } from "./Button";
+import { KnowMoreButton } from "./KnowMoreButton";
 
 export const NavBar: React.FC = () => {
   const router = useRouter();
@@ -24,6 +26,10 @@ export const NavBar: React.FC = () => {
   ];
 
   const isActive = (path: string) => router.pathname === path;
+
+  const handleAdminClick = () => {
+    router.push("/admin/login");
+  };
 
   return (
     <>
@@ -52,7 +58,7 @@ export const NavBar: React.FC = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden items-center gap-8 md:flex flex-1 justify-end">
+        <nav className="hidden items-center gap-4 md:flex flex-1 justify-end">
           <div className="flex items-center gap-9">
             {navLinks.map((link) => (
               <Link
@@ -69,40 +75,64 @@ export const NavBar: React.FC = () => {
               </Link>
             ))}
           </div>
-          <Button size="md">Book Now</Button>
+
+          {/* Admin Login Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleAdminClick}
+            className="text-text-secondary hover:text-rose-gold"
+            title="Admin Login"
+          >
+            <Cat className="h-5 w-5" />
+          </Button>
+
+          <KnowMoreButton size="md" />
         </nav>
 
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden text-text-primary"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle menu"
-          type="button"
-        >
-          <svg
-            className="h-6 w-6"
-            aria-hidden="true"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+        {/* Mobile Menu & Admin Button */}
+        <div className="flex items-center gap-2 md:hidden">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleAdminClick}
+            className="text-text-secondary hover:text-rose-gold"
+            title="Admin Login"
           >
-            {mobileMenuOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            )}
-          </svg>
-        </button>
+            <Cat className="h-5 w-5" />
+          </Button>
+
+          <button
+            className="text-text-primary"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+            type="button"
+          >
+            <svg
+              className="h-6 w-6"
+              aria-hidden="true"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              {mobileMenuOpen ? (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              ) : (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              )}
+            </svg>
+          </button>
+        </div>
       </motion.header>
 
       {/* Mobile Menu - Outside header to avoid transform context issues */}
@@ -157,9 +187,11 @@ export const NavBar: React.FC = () => {
                 transition={{ delay: navLinks.length * 0.1 }}
                 className="mt-4"
               >
-                <Button size="lg" className="w-full shadow-lg">
-                  Book Now
-                </Button>
+                <KnowMoreButton
+                  size="lg"
+                  className="w-full shadow-lg"
+                  onMobileMenuClose={() => setMobileMenuOpen(false)}
+                />
               </motion.div>
             </nav>
             <div className="border-b border-rose-gold/10 mb-4" />

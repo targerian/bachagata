@@ -1,11 +1,7 @@
-import React from "react";
+import { Facebook, Instagram, Twitter } from "lucide-react";
 import Link from "next/link";
-import { Instagram, Twitter, Facebook } from "lucide-react";
-import {
-  FadeIn,
-  StaggerContainer,
-  StaggerItem,
-} from "@/common/animations";
+import type React from "react";
+import { FadeIn } from "@/common/animations";
 import { useContactInfo } from "@/hooks/useContactInfo";
 
 export const Footer: React.FC = () => {
@@ -16,8 +12,8 @@ export const Footer: React.FC = () => {
     ? [
         ...(contactInfo.instagram_url && contactInfo.instagram_url !== "#"
           ? [
-    {
-      name: "Instagram",
+              {
+                name: "Instagram",
                 href: contactInfo.instagram_url,
                 icon: <Instagram className="h-6 w-6" />,
               },
@@ -34,8 +30,8 @@ export const Footer: React.FC = () => {
           : []),
         ...(contactInfo.facebook_url && contactInfo.facebook_url !== "#"
           ? [
-    {
-      name: "Facebook",
+              {
+                name: "Facebook",
                 href: contactInfo.facebook_url,
                 icon: <Facebook className="h-6 w-6" />,
               },
@@ -50,11 +46,11 @@ export const Footer: React.FC = () => {
         <div className="max-w-6xl mx-auto py-10 px-6 sm:px-10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <p className="text-sm text-text-secondary">
-              © 2024 Looci. All Rights Reserved.
+              © {new Date().getFullYear()} Looci. All Rights Reserved.
             </p>
-            <StaggerContainer className="flex items-center gap-6">
-              {socialLinks.map((social) => (
-                <StaggerItem key={social.name}>
+            <div className="flex items-center gap-6">
+              {socialLinks.map((social, index) => (
+                <FadeIn key={social.name} delay={index * 0.1} useInView={false}>
                   <Link
                     href={social.href}
                     className="text-text-secondary hover:text-rose-gold transition-colors"
@@ -62,16 +58,16 @@ export const Footer: React.FC = () => {
                   >
                     {social.icon}
                   </Link>
-                </StaggerItem>
+                </FadeIn>
               ))}
-            </StaggerContainer>
+            </div>
           </div>
           {contactInfo && (
-          <div className="flex justify-center gap-6 mt-6 text-center">
-            <p className="text-sm text-text-secondary">
+            <div className="flex justify-center gap-6 mt-6 text-center">
+              <p className="text-sm text-text-secondary">
                 {contactInfo.email} | {contactInfo.phone}
-            </p>
-          </div>
+              </p>
+            </div>
           )}
         </div>
       </footer>

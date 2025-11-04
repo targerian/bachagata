@@ -53,6 +53,8 @@ const AdminLoginPage: React.FC = () => {
             <Input
               label="Email"
               type="email"
+              name="email"
+              autoComplete="email"
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -62,6 +64,8 @@ const AdminLoginPage: React.FC = () => {
             <Input
               label="Password"
               type="password"
+              name="password"
+              autoComplete="current-password"
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}

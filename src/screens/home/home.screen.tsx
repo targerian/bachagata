@@ -1,18 +1,13 @@
 import Image from "next/image";
 import type React from "react";
 import { useCallback, useEffect, useState } from "react";
-import {
-  FadeIn,
-  ScaleIn,
-  SlideIn,
-  StaggerContainer,
-  StaggerItem,
-} from "@/common/animations";
+import { FadeIn, ScaleIn, SlideIn } from "@/common/animations";
 import {
   AdminEditToggle,
   Button,
   ClassCard,
   ConfirmDialog,
+  KnowMoreButton,
   OverallRating,
   TestimonialCard,
   TestimonialSkeleton,
@@ -226,9 +221,7 @@ export const HomeScreen: React.FC = () => {
               </p>
             </FadeIn>
             <ScaleIn delay={0.6} useInView={false}>
-              <Button size="lg" className="mt-4">
-                Book Now
-              </Button>
+              <KnowMoreButton size="lg" className="mt-4" />
             </ScaleIn>
           </div>
         </section>
@@ -283,21 +276,22 @@ export const HomeScreen: React.FC = () => {
               </p>
             </div>
           </FadeIn>
-          <StaggerContainer
-            staggerDelay={0.15}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
-          >
-            {classes.map((classItem) => (
-              <StaggerItem key={classItem.title} className="h-full">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {classes.map((classItem, index) => (
+              <FadeIn
+                key={classItem.title}
+                delay={index * 0.15}
+                useInView={false}
+              >
                 <ClassCard
                   icon={classItem.icon}
                   title={classItem.title}
                   description={classItem.description}
                   className="h-full"
                 />
-              </StaggerItem>
+              </FadeIn>
             ))}
-          </StaggerContainer>
+          </div>
         </section>
 
         {/* Testimonials Section */}
@@ -348,7 +342,7 @@ export const HomeScreen: React.FC = () => {
                   others discover the joy of dance.
                 </p>
                 <Button onClick={() => setIsAddModalOpen(true)} size="lg">
-                  Share Your Experience
+                  Tell Us Your Story 💃
                 </Button>
               </div>
             </FadeIn>
@@ -406,7 +400,7 @@ export const HomeScreen: React.FC = () => {
                     size="lg"
                     variant="outline"
                   >
-                    Share Your Experience
+                    Tell Us Your Story 💃
                   </Button>
                 </div>
               </FadeIn>

@@ -1,11 +1,6 @@
 import type React from "react";
 import { useCallback, useEffect, useState } from "react";
-import {
-  FadeIn,
-  STAGGER_DELAY,
-  StaggerContainer,
-  StaggerItem,
-} from "@/common/animations";
+import { FadeIn } from "@/common/animations";
 import {
   AdminEditToggle,
   Button,
@@ -213,36 +208,35 @@ export const GalleryScreen: React.FC = () => {
       </section>
 
       {/* Filters */}
-      <section className="mb-8 flex justify-center items-center gap-4">
-        <StaggerContainer
-          staggerDelay={STAGGER_DELAY.fast}
-          className="flex flex-wrap justify-center gap-3"
-        >
-          {filters.map((filter) => (
-            <StaggerItem key={filter}>
+      <section className="mb-8">
+        <div className="flex flex-wrap justify-center gap-3">
+          {filters.map((filter, index) => (
+            <FadeIn key={filter} delay={index * 0.05} useInView={false}>
               <FilterChip
                 active={activeFilter === filter}
                 onClick={() => setActiveFilter(filter)}
               >
                 {filter}
               </FilterChip>
-            </StaggerItem>
+            </FadeIn>
           ))}
-        </StaggerContainer>
+        </div>
+      </section>
 
-        {/* Add Image Button (Admin Only) */}
-        {isAdmin && isEditMode && (
+      {/* Add Image Button (Admin Only) */}
+      {isAdmin && isEditMode && (
+        <section className="mb-8 px-4">
           <FadeIn delay={0.2} useInView={false}>
             <Button
               onClick={() => setIsUploadModalOpen(true)}
               size="md"
-              className="flex items-center gap-2"
+              className="flex items-center justify-center gap-2 w-full"
             >
               Add Image
             </Button>
           </FadeIn>
-        )}
-      </section>
+        </section>
+      )}
 
       {/* Image Grid */}
       <section className="mb-12 md:mb-20">
@@ -262,15 +256,15 @@ export const GalleryScreen: React.FC = () => {
             )}
           </div>
         ) : (
-          <StaggerContainer
+          <div
             key={`gallery-${currentPage}-${activeFilter}`}
-            staggerDelay={STAGGER_DELAY.fast}
             className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4"
-            useInView={false}
           >
             {paginatedImages.map((image, index) => (
-              <StaggerItem
+              <FadeIn
                 key={image.id}
+                delay={index * 0.05}
+                useInView={false}
                 className={
                   index === 0
                     ? "col-span-1 row-span-2 h-full"
@@ -294,9 +288,9 @@ export const GalleryScreen: React.FC = () => {
                     fillHeight={index === 0}
                   />
                 </div>
-              </StaggerItem>
+              </FadeIn>
             ))}
-          </StaggerContainer>
+          </div>
         )}
       </section>
 

@@ -43,6 +43,13 @@ export const ClassListCard: React.FC<ClassListCardProps> = ({
     });
   };
 
+  const getDayOfWeek = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      weekday: "long",
+    });
+  };
+
   const isPastClass = new Date(classData.date_time) < new Date();
 
   return (
@@ -69,8 +76,17 @@ export const ClassListCard: React.FC<ClassListCardProps> = ({
                 {classData.name}
               </h3>
               <p className="text-text-secondary text-sm mb-2">
-                {formatDate(classData.date_time)} at{" "}
-                {formatTime(classData.date_time)}
+                {classData.is_recurring ? (
+                  <>
+                    Every {getDayOfWeek(classData.date_time)} at{" "}
+                    {formatTime(classData.date_time)}
+                  </>
+                ) : (
+                  <>
+                    {formatDate(classData.date_time)} at{" "}
+                    {formatTime(classData.date_time)}
+                  </>
+                )}
               </p>
               {classData.is_recurring && (
                 <span className="inline-block px-3 py-1 bg-rose-gold/20 text-rose-gold text-xs font-medium rounded-full">

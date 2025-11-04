@@ -78,3 +78,13 @@ export const createWhatsAppBookingUrl = (
   return `https://wa.me/${formattedPhone}?text=${encodedMessage}`;
 };
 
+/**
+ * Create WhatsApp URL for general inquiry
+ * Opens WhatsApp with pre-filled general inquiry message
+ */
+export const createWhatsAppGeneralInquiryUrl = (phone: string): string => {
+  const formattedPhone = formatPhoneForWhatsApp(phone);
+  const message = "Hello Looci, I'd like to know more about ";
+  const encodedMessage = encodeURIComponent(message);
+  return `https://wa.me/${formattedPhone}?text=${encodedMessage}`;
+};

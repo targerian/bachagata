@@ -1,18 +1,15 @@
-import { Plus } from "lucide-react";
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { FadeIn } from "@/common/animations";
 import {
-  FadeIn,
-  SlideIn,
-  StaggerContainer,
-  StaggerItem,
-} from "@/common/animations";
-import { AdminEditToggle, Button, ConfirmDialog, ClassSkeleton } from "@/common/components";
+  AdminEditToggle,
+  Button,
+  ClassSkeleton,
+  ConfirmDialog,
+} from "@/common/components";
 import { useAuth } from "@/hooks/useAuth";
 import { type Class, supabase } from "@/lib/supabase";
 import { AddClassModal, ClassListCard, EditClassModal } from "./components";
-
-type ClassType = "All" | "Bachata" | "Salsa" | "Chair";
 
 export const ClassesScreen: React.FC = () => {
   const { isAdmin } = useAuth();
@@ -23,7 +20,7 @@ export const ClassesScreen: React.FC = () => {
   const [editingClass, setEditingClass] = useState<Class | null>(null);
   const [deletingClass, setDeletingClass] = useState<Class | null>(null);
 
-  const fetchClasses = async () => {
+  const fetchClasses = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from("classes")
@@ -37,11 +34,11 @@ export const ClassesScreen: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchClasses();
-  }, []);
+  }, [fetchClasses]);
 
   const handleDeleteClass = async () => {
     if (!deletingClass) return;
@@ -130,11 +127,11 @@ export const ClassesScreen: React.FC = () => {
 
         {/* Add Class Button (Admin Only) */}
         {isAdmin && isEditMode && (
-          <FadeIn delay={0.2} useInView={false}>
+          <FadeIn delay={0.2} useInView={false} className="w-full sm:w-auto">
             <Button
               onClick={() => setIsAddModalOpen(true)}
               size="md"
-              className="flex items-center gap-2 whitespace-nowrap"
+              className="flex items-center gap-2 whitespace-nowrap w-full sm:w-auto"
             >
               Add Class
             </Button>
@@ -162,18 +159,18 @@ export const ClassesScreen: React.FC = () => {
             )}
           </div>
         ) : (
-          <StaggerContainer className="flex flex-col gap-6">
-            {upcomingClasses.map((classData) => (
-              <StaggerItem key={classData.id}>
+          <div className="flex flex-col gap-6">
+            {upcomingClasses.map((classData, index) => (
+              <FadeIn key={classData.id} delay={index * 0.1} useInView={false}>
                 <ClassListCard
                   classData={classData}
                   isEditMode={isEditMode}
                   onEdit={() => setEditingClass(classData)}
                   onDelete={() => setDeletingClass(classData)}
                 />
-              </StaggerItem>
+              </FadeIn>
             ))}
-          </StaggerContainer>
+          </div>
         )}
       </div>
     </main>
