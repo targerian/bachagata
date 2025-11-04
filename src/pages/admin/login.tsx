@@ -2,7 +2,7 @@ import type React from "react";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "@/hooks/useAuth";
-import { Button, Input } from "@/common/components";
+import { Button, Input, SEO } from "@/common/components";
 import { FadeIn } from "@/common/animations";
 
 const AdminLoginPage: React.FC = () => {
@@ -37,8 +37,14 @@ const AdminLoginPage: React.FC = () => {
   };
 
   return (
-    <main className="flex min-h-screen items-center justify-center px-4 py-16">
-      <FadeIn className="w-full max-w-md">
+    <>
+      <SEO
+        title="Admin Login"
+        description="Sign in to manage your content"
+        noindex={true}
+      />
+      <main className="flex min-h-screen items-center justify-center px-4 py-16">
+        <FadeIn className="w-full max-w-md">
         <div className="glass-card p-8">
           <div className="mb-8 text-center">
             <h1 className="font-serif text-4xl font-bold text-rose-gold mb-2">
@@ -90,6 +96,7 @@ const AdminLoginPage: React.FC = () => {
         </div>
       </FadeIn>
     </main>
+    </>
   );
 };
 

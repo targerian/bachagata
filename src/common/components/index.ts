@@ -67,3 +67,5 @@ export type { AdminEditToggleProps } from "./AdminEditToggle";
 
 export { KnowMoreButton } from "./KnowMoreButton";
 export type { KnowMoreButtonProps } from "./KnowMoreButton";
+
+export { SEO } from "./SEO";

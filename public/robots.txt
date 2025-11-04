@@ -1,0 +1,8 @@
+# robots.txt for Luci Latin Dance School
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+Sitemap: https://bachagata.vercel.app/sitemap.xml
+
