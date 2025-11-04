@@ -39,11 +39,11 @@ export const NavBar: React.FC = () => {
         <Link href="/" className="flex items-center gap-4 text-text-primary">
           <div className="text-rose-gold relative">
             <Image
-              src="/images/logos/4_20251028_104531_0001.png"
+              src="/images/logos/logo.png"
               alt="Looci Logo"
               width={100}
               height={50}
-              className="object-contain w-[100px] h-[30px]"
+              className="object-contain w-[100px]"
             />
           </div>
           {/* <h2 className="text-text-primary text-xl font-bold leading-tight tracking-[-0.015em]">

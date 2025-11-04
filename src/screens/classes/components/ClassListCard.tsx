@@ -3,6 +3,11 @@ import { motion } from "framer-motion";
 import { MapPin, Clock, DollarSign, Edit2, Trash2 } from "lucide-react";
 import type { Class } from "@/lib/supabase";
 import { Button } from "@/common/components";
+import {
+  createWhatsAppEnquiryUrl,
+  createWhatsAppBookingUrl,
+} from "@/lib/whatsapp";
+import { useContactInfo } from "@/hooks/useContactInfo";
 
 export interface ClassListCardProps {
   classData: Class;
@@ -17,6 +22,8 @@ export const ClassListCard: React.FC<ClassListCardProps> = ({
   onEdit,
   onDelete,
 }) => {
+  const { data: contactInfo } = useContactInfo();
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -114,9 +121,39 @@ export const ClassListCard: React.FC<ClassListCardProps> = ({
             {classData.description}
           </p>
 
-          {!isEditMode && !isPastClass && (
-            <div className="mt-2">
-              <Button size="sm">Book Now</Button>
+          {!isEditMode && !isPastClass && contactInfo && (
+            <div className="mt-2 flex flex-col md:flex-row gap-3">
+              <Button
+                size="sm"
+                variant="outline"
+                className="w-full md:w-auto"
+                onClick={() => {
+                  const url = createWhatsAppEnquiryUrl(contactInfo.phone, {
+                    name: classData.name,
+                    place: classData.place,
+                    dateTime: classData.date_time,
+                    isRecurring: classData.is_recurring,
+                  });
+                  window.open(url, "_blank");
+                }}
+              >
+                Enquire
+              </Button>
+              <Button
+                size="sm"
+                className="w-full md:w-auto"
+                onClick={() => {
+                  const url = createWhatsAppBookingUrl(contactInfo.phone, {
+                    name: classData.name,
+                    place: classData.place,
+                    dateTime: classData.date_time,
+                    isRecurring: classData.is_recurring,
+                  });
+                  window.open(url, "_blank");
+                }}
+              >
+                Book
+              </Button>
             </div>
           )}
         </div>

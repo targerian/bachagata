@@ -50,6 +50,7 @@ export type ContactInfo = {
   address: string;
   instagram_url?: string;
   twitter_url?: string;
+  facebook_url?: string;
   updated_at: string;
   updated_by?: string;
 };

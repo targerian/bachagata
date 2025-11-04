@@ -1,21 +1,21 @@
 import type React from "react";
 import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { Modal, Button, Input } from "@/common/components";
 import { supabase, type ContactInfo } from "@/lib/supabase";
 
 export interface EditContactModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSuccess: () => void;
   contactInfo: ContactInfo;
 }
 
 export const EditContactModal: React.FC<EditContactModalProps> = ({
   isOpen,
   onClose,
-  onSuccess,
   contactInfo,
 }) => {
+  const queryClient = useQueryClient();
   const [email, setEmail] = useState(contactInfo.email);
   const [phone, setPhone] = useState(contactInfo.phone);
   const [address, setAddress] = useState(contactInfo.address);
@@ -23,6 +23,9 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
     contactInfo.instagram_url || "",
   );
   const [twitterUrl, setTwitterUrl] = useState(contactInfo.twitter_url || "");
+  const [facebookUrl, setFacebookUrl] = useState(
+    contactInfo.facebook_url || "",
+  );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -40,12 +43,14 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
           address,
           instagram_url: instagramUrl,
           twitter_url: twitterUrl,
+          facebook_url: facebookUrl,
         })
         .eq("id", contactInfo.id);
 
       if (updateError) throw updateError;
 
-      onSuccess();
+      // Invalidate and refetch contact info
+      queryClient.invalidateQueries({ queryKey: ["contactInfo"] });
       onClose();
     } catch (err) {
       console.error("Error updating contact info:", err);
@@ -100,6 +105,14 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
           placeholder="https://twitter.com/username"
           value={twitterUrl}
           onChange={(e) => setTwitterUrl(e.target.value)}
+        />
+
+        <Input
+          label="Facebook URL"
+          type="url"
+          placeholder="https://facebook.com/username"
+          value={facebookUrl}
+          onChange={(e) => setFacebookUrl(e.target.value)}
         />
 
         {error && (
