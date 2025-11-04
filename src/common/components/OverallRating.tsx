@@ -21,7 +21,7 @@ export const OverallRating: React.FC<OverallRatingProps> = ({
       )}
     >
       <div className="flex items-center gap-3">
-        <Rating rating={averageRating} size="lg" />
+      <Rating rating={averageRating} size="lg" />
         <span className="text-2xl font-bold text-text-primary">
           {averageRating.toFixed(1)}
         </span>

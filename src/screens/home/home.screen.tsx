@@ -21,10 +21,14 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase, type Testimonial } from "@/lib/supabase";
 import { AddTestimonialModal, TestimonialAdminControls } from "./components";
 
+const DISPLAYED_TESTIMONIALS_LIMIT = 8; // Max testimonials to show on page
+
 export const HomeScreen: React.FC = () => {
   const { isAdmin } = useAuth();
   const [isEditMode, setIsEditMode] = useState(false);
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [overallRating, setOverallRating] = useState(0);
+  const [totalRatingCount, setTotalRatingCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [deletingTestimonial, setDeletingTestimonial] =
@@ -32,20 +36,45 @@ export const HomeScreen: React.FC = () => {
 
   const fetchTestimonials = useCallback(async () => {
     try {
-      let query = supabase
-        .from("testimonials")
-        .select("*")
-        .order("created_at", { ascending: false });
+      if (isEditMode) {
+        // In edit mode: show all testimonials
+        const { data, error } = await supabase
+          .from("testimonials")
+          .select("*")
+          .order("created_at", { ascending: false });
 
-      // In edit mode, show all testimonials; otherwise only approved 4+ star testimonials
-      if (!isEditMode) {
-        query = query.eq("is_approved", true).gte("rating", 4);
+        if (error) throw error;
+        setTestimonials(data || []);
+      } else {
+        // For public view: calculate overall rating from ALL testimonials (approved + pending)
+        const { data: allForRating, error: ratingError } = await supabase
+          .from("testimonials")
+          .select("rating");
+
+        if (ratingError) throw ratingError;
+
+        const ratingsData = allForRating || [];
+        setTotalRatingCount(ratingsData.length);
+
+        if (ratingsData.length > 0) {
+          const avg =
+            ratingsData.reduce((sum, t) => sum + t.rating, 0) /
+            ratingsData.length;
+          setOverallRating(avg);
+        }
+
+        // Fetch limited testimonials to display (approved, 4+ stars, max 8)
+        const { data: displayData, error: displayError } = await supabase
+          .from("testimonials")
+          .select("*")
+          .eq("is_approved", true)
+          .gte("rating", 4)
+          .order("created_at", { ascending: false })
+          .limit(DISPLAYED_TESTIMONIALS_LIMIT);
+
+        if (displayError) throw displayError;
+        setTestimonials(displayData || []);
       }
-
-      const { data, error } = await query;
-
-      if (error) throw error;
-      setTestimonials(data || []);
     } catch (err) {
       console.error("Error fetching testimonials:", err);
     } finally {
@@ -102,12 +131,6 @@ export const HomeScreen: React.FC = () => {
       setDeletingTestimonial(null);
     }
   };
-
-  // Calculate average rating
-  const averageRating =
-    testimonials.length > 0
-      ? testimonials.reduce((sum, t) => sum + t.rating, 0) / testimonials.length
-      : 0;
 
   const classes = [
     {
@@ -300,11 +323,11 @@ export const HomeScreen: React.FC = () => {
           </FadeIn>
 
           {/* Overall Rating - only show in non-edit mode */}
-          {!isEditMode && testimonials.length > 0 && (
+          {!isEditMode && totalRatingCount > 0 && (
             <FadeIn delay={0.2}>
               <OverallRating
-                averageRating={averageRating}
-                totalReviews={testimonials.length}
+                averageRating={overallRating}
+                totalReviews={totalRatingCount}
                 className="mb-12"
               />
             </FadeIn>
@@ -331,13 +354,14 @@ export const HomeScreen: React.FC = () => {
             </FadeIn>
           ) : (
             <>
-              <StaggerContainer
-                staggerDelay={0.2}
-                className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8"
-              >
-                {testimonials.map((testimonial) => (
-                  <StaggerItem key={testimonial.id} className="flex">
-                    <div className="relative flex-1">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                {testimonials.map((testimonial, index) => (
+                  <FadeIn
+                    key={testimonial.id}
+                    delay={index * 0.1}
+                    useInView={false}
+                  >
+                    <div className="relative h-full">
                       {/* Admin Controls */}
                       {isAdmin && isEditMode && (
                         <TestimonialAdminControls
@@ -367,12 +391,12 @@ export const HomeScreen: React.FC = () => {
                         rating={testimonial.rating}
                         quote={testimonial.testimonial}
                         author={testimonial.name}
-                        className="flex-1"
+                        className="h-full"
                       />
                     </div>
-                  </StaggerItem>
+                  </FadeIn>
                 ))}
-              </StaggerContainer>
+              </div>
 
               {/* Add Testimonial Button */}
               <FadeIn delay={0.6}>

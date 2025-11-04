@@ -45,7 +45,7 @@ export const TestimonialAdminControls: React.FC<TestimonialAdminControlsProps> =
           onClick={handleApprove}
           disabled={isApproving}
           className="glass-card p-2 hover:bg-green-500/20 transition-colors rounded disabled:opacity-50 disabled:cursor-not-allowed"
-          title="Approve testimonial"
+          title="Approve and show in app"
         >
           {isApproving ? (
             <Loader2 className="h-5 w-5 text-green-400 animate-spin" />
@@ -59,7 +59,7 @@ export const TestimonialAdminControls: React.FC<TestimonialAdminControlsProps> =
           onClick={handleReject}
           disabled={isRejecting}
           className="glass-card p-2 hover:bg-yellow-500/20 transition-colors rounded disabled:opacity-50 disabled:cursor-not-allowed"
-          title="Unapprove testimonial"
+          title="Hide from app"
         >
           {isRejecting ? (
             <Loader2 className="h-5 w-5 text-yellow-400 animate-spin" />

@@ -24,19 +24,19 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <div className="dark min-h-screen flex flex-col">
-          <NavBar />
-          <div className="flex-1">
-            <AnimatePresence mode="wait">
-              <PageTransition key={router.pathname}>
-                <Component {...pageProps} />
-              </PageTransition>
-            </AnimatePresence>
-          </div>
-          <Footer />
-        </div>
-      </AuthProvider>
+    <AuthProvider>
+    <div className="dark min-h-screen flex flex-col">
+      <NavBar />
+      <div className="flex-1">
+        <AnimatePresence mode="wait">
+          <PageTransition key={router.pathname}>
+            <Component {...pageProps} />
+          </PageTransition>
+        </AnimatePresence>
+      </div>
+      <Footer />
+    </div>
+    </AuthProvider>
     </QueryClientProvider>
   );
 }

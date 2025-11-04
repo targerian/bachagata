@@ -16,8 +16,8 @@ export const Footer: React.FC = () => {
     ? [
         ...(contactInfo.instagram_url && contactInfo.instagram_url !== "#"
           ? [
-              {
-                name: "Instagram",
+    {
+      name: "Instagram",
                 href: contactInfo.instagram_url,
                 icon: <Instagram className="h-6 w-6" />,
               },
@@ -34,8 +34,8 @@ export const Footer: React.FC = () => {
           : []),
         ...(contactInfo.facebook_url && contactInfo.facebook_url !== "#"
           ? [
-              {
-                name: "Facebook",
+    {
+      name: "Facebook",
                 href: contactInfo.facebook_url,
                 icon: <Facebook className="h-6 w-6" />,
               },
@@ -67,11 +67,11 @@ export const Footer: React.FC = () => {
             </StaggerContainer>
           </div>
           {contactInfo && (
-            <div className="flex justify-center gap-6 mt-6 text-center">
-              <p className="text-sm text-text-secondary">
+          <div className="flex justify-center gap-6 mt-6 text-center">
+            <p className="text-sm text-text-secondary">
                 {contactInfo.email} | {contactInfo.phone}
-              </p>
-            </div>
+            </p>
+          </div>
           )}
         </div>
       </footer>

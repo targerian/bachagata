@@ -53,7 +53,7 @@ export const Rating: React.FC<RatingProps> = ({
 
     // Full star
     if (difference >= 1) {
-      return (
+  return (
         <Star
           key={index}
           className={cn(
@@ -70,7 +70,7 @@ export const Rating: React.FC<RatingProps> = ({
 
     // Half star
     if (difference > 0 && difference < 1) {
-      return (
+        return (
         <div key={index} className="relative">
           <Star
             className={cn(
@@ -96,17 +96,17 @@ export const Rating: React.FC<RatingProps> = ({
 
     // Empty star
     return (
-      <Star
+                <Star
         key={index}
-        className={cn(
-          sizeClasses[size],
+                  className={cn(
+                    sizeClasses[size],
           "text-warm-gold transition-all",
           interactive && "cursor-pointer hover:scale-110 hover:fill-warm-gold/50",
-        )}
+                  )}
         onClick={() => handleClick(index)}
         onMouseEnter={() => handleMouseEnter(index)}
         onMouseLeave={handleMouseLeave}
-      />
+                />
     );
   };
 
