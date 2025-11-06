@@ -9,6 +9,7 @@ interface FadeInProps {
   duration?: number;
   className?: string;
   useInView?: boolean;
+  threshold?: number;
 }
 
 export const FadeIn: React.FC<FadeInProps> = ({
@@ -18,6 +19,7 @@ export const FadeIn: React.FC<FadeInProps> = ({
   duration = ANIMATION_DURATION.normal,
   className,
   useInView = true,
+  threshold = 0.3,
 }) => {
   const getDirectionOffset = () => {
     if (shouldReduceMotion()) return { x: 0, y: 0 };
@@ -42,7 +44,7 @@ export const FadeIn: React.FC<FadeInProps> = ({
     ? {
         initial: { opacity: 0, ...offset },
         whileInView: { opacity: 1, x: 0, y: 0 },
-        viewport: { once: true, margin: "-50px", amount: 0.3 },
+        viewport: { once: true, margin: "-50px", amount: threshold },
       }
     : {
         initial: { opacity: 0, ...offset },
