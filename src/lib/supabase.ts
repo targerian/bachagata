@@ -38,6 +38,8 @@ export type Class = {
   price?: number;
   image_url?: string;
   is_recurring: boolean;
+  day_of_week?: string;
+  time?: string;
   created_by: string;
   created_at: string;
   updated_at: string;
