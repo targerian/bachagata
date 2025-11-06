@@ -86,7 +86,7 @@ npm run format
 ### 1. Home Page (`/`)
 - **Hero Section**: Full-screen hero with Lucy's photo and CTA
 - **Meet Your Instructor**: Bio section with photo
-- **Class Offerings**: 3 cards (Bachata, Salsa, Chair Dancing)
+- **Class Offerings**: 3 cards (Bachata, Salsa, Chair Burlesque)
 - **Testimonials**: Student reviews with 5-star ratings
 
 ### 2. Contact Page (`/contact`)

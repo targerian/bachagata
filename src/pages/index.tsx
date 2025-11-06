@@ -1,6 +1,6 @@
-import { HomeScreen } from "@/screens/home/home.screen";
-import { SEO } from "@/common/components";
 import Head from "next/head";
+import { SEO } from "@/common/components";
+import { HomeScreen } from "@/screens/home/home.screen";
 
 export default function Home() {
   const structuredData = {
@@ -8,7 +8,7 @@ export default function Home() {
     "@type": ["DanceSchool", "SportsActivityLocation"],
     name: "Luci Latin Dance School",
     description:
-      "Professional bachata, salsa, and chair dancing classes with Looci, an experienced instructor dedicated to sharing the joy of Latin dance.",
+      "Professional bachata, salsa, and Chair Burlesque classes with Looci, an experienced instructor dedicated to sharing the joy of Latin dance.",
     url: "https://bachagata.vercel.app/",
     image: "https://bachagata.vercel.app/images/lucy/photoshoot-2.webp",
     instructor: {
@@ -16,7 +16,7 @@ export default function Home() {
       name: "Looci",
       jobTitle: "Professional Bachata Instructor",
       description:
-        "With over a decade of experience teaching bachata, salsa, and chair dancing.",
+        "With over a decade of experience teaching bachata, salsa, and Chair Burlesque.",
     },
     offers: {
       "@type": "Offer",
@@ -35,7 +35,7 @@ export default function Home() {
         },
         {
           "@type": "Service",
-          name: "Chair Dancing Classes",
+          name: "Chair Burlesque Classes",
           description:
             "Build confidence and express yourself in this empowering solo dance style.",
         },
@@ -46,13 +46,14 @@ export default function Home() {
   return (
     <>
       <SEO
-        title="Luci Latin Dance School | Bachata, Salsa & Chair Dancing Classes"
-        description="Transform your dance with Looci, a professional bachata instructor with over a decade of experience. Learn bachata, salsa, and chair dancing in a supportive, fun atmosphere."
+        title="Looci Bachagata | Bachata, Salsa & Chair Burlesque Classes"
+        description="Transform your dance with Looci, a professional bachata instructor with over a decade of experience. Learn bachata, salsa, and Chair Burlesque in a supportive, fun atmosphere."
         canonical="https://bachagata.vercel.app/"
       />
       <Head>
         <script
           type="application/ld+json"
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: Safe - Structured data from trusted source for SEO
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       </Head>
