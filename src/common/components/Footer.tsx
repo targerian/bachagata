@@ -2,23 +2,42 @@ import { Facebook, Instagram, Twitter } from "lucide-react";
 import Link from "next/link";
 import type React from "react";
 import { FadeIn } from "@/common/animations";
+import { Badge } from "@/components/ui/badge";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useContactInfo } from "@/hooks/useContactInfo";
 
 export const Footer: React.FC = () => {
   const { data: contactInfo } = useContactInfo();
 
-  // Build social links from database
-  const socialLinks = contactInfo
+  // Build Instagram accounts from database
+  const instagramAccounts = contactInfo
     ? [
         ...(contactInfo.instagram_url && contactInfo.instagram_url !== "#"
           ? [
               {
-                name: "Instagram",
+                label: "Personal",
                 href: contactInfo.instagram_url,
-                icon: <Instagram className="h-6 w-6" />,
               },
             ]
           : []),
+        ...(contactInfo.instagram_url_2 && contactInfo.instagram_url_2 !== "#"
+          ? [
+              {
+                label: "Bachagata",
+                href: contactInfo.instagram_url_2,
+              },
+            ]
+          : []),
+      ]
+    : [];
+
+  // Build social links from database
+  const socialLinks = contactInfo
+    ? [
         ...(contactInfo.twitter_url && contactInfo.twitter_url !== "#"
           ? [
               {
@@ -49,12 +68,65 @@ export const Footer: React.FC = () => {
               © {new Date().getFullYear()} Looci. All Rights Reserved.
             </p>
             <div className="flex items-center gap-6">
+              {/* Instagram Accounts */}
+              {instagramAccounts.length > 0 && (
+                <div className="flex items-center gap-3">
+                  {instagramAccounts.length === 1 ? (
+                    <FadeIn delay={0} useInView={false}>
+                      <Link
+                        href={instagramAccounts[0].href}
+                        className="text-text-secondary hover:text-rose-gold transition-colors"
+                        aria-label="Instagram"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Instagram className="h-6 w-6" />
+                      </Link>
+                    </FadeIn>
+                  ) : (
+                    instagramAccounts.map((account) => (
+                      <FadeIn key={account.href} delay={0.1} useInView={false}>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Link
+                              href={account.href}
+                              className="relative group flex items-center gap-1"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-label={`Instagram ${account.label}`}
+                            >
+                              <Instagram className="h-6 w-6 text-text-secondary group-hover:text-rose-gold transition-colors" />
+                              <Badge
+                                variant="outline"
+                                className="text-[10px] px-1.5 py-0 h-4 border-rose-gold/30 text-rose-gold group-hover:bg-rose-gold/10 transition-colors"
+                              >
+                                {account.label}
+                              </Badge>
+                            </Link>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p className="text-xs">{account.label} Instagram</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </FadeIn>
+                    ))
+                  )}
+                </div>
+              )}
+
+              {/* Other Social Links */}
               {socialLinks.map((social, index) => (
-                <FadeIn key={social.name} delay={index * 0.1} useInView={false}>
+                <FadeIn
+                  key={social.name}
+                  delay={(instagramAccounts.length + index) * 0.1}
+                  useInView={false}
+                >
                   <Link
                     href={social.href}
                     className="text-text-secondary hover:text-rose-gold transition-colors"
                     aria-label={social.name}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     {social.icon}
                   </Link>

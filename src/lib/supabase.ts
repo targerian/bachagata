@@ -49,6 +49,7 @@ export type ContactInfo = {
   phone: string;
   address: string;
   instagram_url?: string;
+  instagram_url_2?: string;
   twitter_url?: string;
   facebook_url?: string;
   updated_at: string;

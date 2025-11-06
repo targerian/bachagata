@@ -22,6 +22,9 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
   const [instagramUrl, setInstagramUrl] = useState(
     contactInfo.instagram_url || "",
   );
+  const [instagramUrl2, setInstagramUrl2] = useState(
+    contactInfo.instagram_url_2 || "",
+  );
   const [twitterUrl, setTwitterUrl] = useState(contactInfo.twitter_url || "");
   const [facebookUrl, setFacebookUrl] = useState(
     contactInfo.facebook_url || "",
@@ -42,6 +45,7 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
           phone,
           address,
           instagram_url: instagramUrl,
+          instagram_url_2: instagramUrl2,
           twitter_url: twitterUrl,
           facebook_url: facebookUrl,
         })
@@ -92,11 +96,19 @@ export const EditContactModal: React.FC<EditContactModalProps> = ({
         />
 
         <Input
-          label="Instagram URL"
+          label="Instagram URL (Primary)"
           type="url"
           placeholder="https://instagram.com/username"
           value={instagramUrl}
           onChange={(e) => setInstagramUrl(e.target.value)}
+        />
+
+        <Input
+          label="Instagram URL (Secondary)"
+          type="url"
+          placeholder="https://instagram.com/username2"
+          value={instagramUrl2}
+          onChange={(e) => setInstagramUrl2(e.target.value)}
         />
 
         <Input

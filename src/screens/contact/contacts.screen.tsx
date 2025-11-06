@@ -1,6 +1,6 @@
+import { Facebook, Instagram, Twitter } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
-import { Instagram, Twitter, Facebook } from "lucide-react";
 import { FadeIn, SlideIn } from "@/common/animations";
 import {
   AdminEditToggle,
@@ -10,6 +10,12 @@ import {
   Input,
   Textarea,
 } from "@/common/components";
+import { Badge } from "@/components/ui/badge";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useAuth } from "@/hooks/useAuth";
 import { useContactInfo } from "@/hooks/useContactInfo";
 import { EditContactModal } from "./components";
@@ -97,17 +103,29 @@ export const ContactScreen: React.FC = () => {
       ]
     : [];
 
-  const socialLinks = contactInfo
+  const instagramAccounts = contactInfo
     ? [
         ...(contactInfo.instagram_url && contactInfo.instagram_url !== "#"
           ? [
               {
-                name: "Instagram",
+                label: "Personal",
                 href: contactInfo.instagram_url,
-                icon: <Instagram className="h-6 w-6" />,
               },
             ]
           : []),
+        ...(contactInfo.instagram_url_2 && contactInfo.instagram_url_2 !== "#"
+          ? [
+              {
+                label: "Bachagata",
+                href: contactInfo.instagram_url_2,
+              },
+            ]
+          : []),
+      ]
+    : [];
+
+  const socialLinks = contactInfo
+    ? [
         ...(contactInfo.twitter_url && contactInfo.twitter_url !== "#"
           ? [
               {
@@ -195,19 +213,68 @@ export const ContactScreen: React.FC = () => {
                   />
                 </FadeIn>
               ))}
-              {socialLinks.length > 0 && (
+              {(instagramAccounts.length > 0 || socialLinks.length > 0) && (
                 <FadeIn delay={0.5} useInView={false}>
                   <div className="flex items-center gap-4 pt-4 border-t border-border-color">
                     <p className="text-text-secondary text-sm font-medium">
                       Follow Me:
                     </p>
-                    <div className="flex gap-4">
+                    <div className="flex items-center gap-4">
+                      {/* Instagram Accounts */}
+                      {instagramAccounts.length > 0 && (
+                        <div className="flex items-center gap-2">
+                          {instagramAccounts.length === 1 ? (
+                            <a
+                              href={instagramAccounts[0].href}
+                              className="text-text-primary hover:text-rose-gold transition-colors"
+                              aria-label="Instagram"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <Instagram className="h-6 w-6" />
+                            </a>
+                          ) : (
+                            <div className="flex items-center gap-2">
+                              {instagramAccounts.map((account) => (
+                                <Tooltip key={account.href}>
+                                  <TooltipTrigger asChild>
+                                    <a
+                                      href={account.href}
+                                      className="relative group flex items-center gap-1"
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      aria-label={`Instagram ${account.label}`}
+                                    >
+                                      <Instagram className="h-6 w-6 text-text-primary group-hover:text-rose-gold transition-colors" />
+                                      <Badge
+                                        variant="outline"
+                                        className="text-[10px] px-1.5 py-0 h-4 border-rose-gold/30 text-rose-gold group-hover:bg-rose-gold/10 transition-colors"
+                                      >
+                                        {account.label}
+                                      </Badge>
+                                    </a>
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    <p className="text-xs">
+                                      {account.label} Instagram
+                                    </p>
+                                  </TooltipContent>
+                                </Tooltip>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      {/* Other Social Links */}
                       {socialLinks.map((social) => (
                         <a
                           key={social.name}
                           href={social.href}
                           className="text-text-primary hover:text-rose-gold transition-colors"
                           aria-label={social.name}
+                          target="_blank"
+                          rel="noopener noreferrer"
                         >
                           {social.icon}
                         </a>
