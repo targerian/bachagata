@@ -86,10 +86,43 @@ export const ClassesScreen: React.FC = () => {
     }
   };
 
+  // Calculate next occurrence for recurring classes
+  const getNextOccurrence = (classData: Class): Date => {
+    if (!classData.is_recurring || !classData.day_of_week || !classData.time) {
+      // Not recurring, use the stored date_time
+      return new Date(classData.date_time);
+    }
+
+    // For recurring classes, calculate next occurrence
+    const now = new Date();
+    const [hours, minutes] = classData.time.split(":").map(Number);
+    const targetDay = parseInt(classData.day_of_week, 10);
+
+    const targetDate = new Date(now);
+    targetDate.setHours(hours, minutes, 0, 0);
+
+    const currentDay = now.getDay();
+    let daysUntilTarget = targetDay - currentDay;
+
+    // If target day is today but time has passed, or target day is before today, go to next week
+    if (
+      daysUntilTarget < 0 ||
+      (daysUntilTarget === 0 && now.getHours() * 60 + now.getMinutes() >= hours * 60 + minutes)
+    ) {
+      daysUntilTarget += 7;
+    }
+
+    targetDate.setDate(targetDate.getDate() + daysUntilTarget);
+    return targetDate;
+  };
+
   // Filter upcoming classes (future classes only for non-admin view)
   const upcomingClasses = isEditMode
     ? classes
-    : classes.filter((c) => new Date(c.date_time) >= new Date());
+    : classes.filter((c) => {
+        const nextOccurrence = getNextOccurrence(c);
+        return nextOccurrence >= new Date();
+      });
 
   return (
     <main className="flex flex-col gap-10 mt-10 md:mt-16 px-4 md:px-10 lg:px-30 max-w-[1200px] mx-auto">

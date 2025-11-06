@@ -172,6 +172,7 @@ export const EditClassModal: React.FC<EditClassModalProps> = ({
             setPreviewUrl("");
           }}
           aspect={4 / 3}
+          loading={loading}
         />
       ) : (
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -345,10 +346,21 @@ export const EditClassModal: React.FC<EditClassModalProps> = ({
           )}
 
           <div className="flex flex-col sm:flex-row justify-end gap-3 mt-4">
-            <Button type="button" variant="outline" onClick={onClose} size="md" className="w-full sm:w-auto">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onClose}
+              size="md"
+              className="w-full sm:w-auto"
+            >
               Cancel
             </Button>
-            <Button type="submit" size="md" disabled={loading} className="w-full sm:w-auto">
+            <Button
+              type="submit"
+              size="md"
+              disabled={loading}
+              className="w-full sm:w-auto"
+            >
               {loading ? "Saving..." : "Save Changes"}
             </Button>
           </div>

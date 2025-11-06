@@ -1,5 +1,6 @@
+import { Loader2 } from "lucide-react";
 import type React from "react";
-import { useState, useRef, useCallback } from "react";
+import { useCallback, useRef, useState } from "react";
 import ReactCrop, { type Crop, type PixelCrop } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import { Button } from "./Button";
@@ -9,6 +10,7 @@ export interface ImageCropperProps {
   onCropComplete: (croppedImageBlob: Blob) => void;
   onCancel: () => void;
   aspect?: number;
+  loading?: boolean;
 }
 
 export const ImageCropper: React.FC<ImageCropperProps> = ({
@@ -16,6 +18,7 @@ export const ImageCropper: React.FC<ImageCropperProps> = ({
   onCropComplete,
   onCancel,
   aspect,
+  loading = false,
 }) => {
   const [crop, setCrop] = useState<Crop>({
     unit: "%",
@@ -94,19 +97,31 @@ export const ImageCropper: React.FC<ImageCropperProps> = ({
       </div>
 
       <div className="flex justify-end gap-3">
-        <Button type="button" variant="outline" onClick={onCancel} size="md">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={onCancel}
+          size="md"
+          disabled={loading}
+        >
           Cancel
         </Button>
         <Button
           type="button"
           onClick={handleCropComplete}
           size="md"
-          disabled={!completedCrop}
+          disabled={!completedCrop || loading}
         >
-          Apply Crop
+          {loading ? (
+            <div className="flex items-center gap-1">
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Applying...
+            </div>
+          ) : (
+            "Apply Crop"
+          )}
         </Button>
       </div>
     </div>
   );
 };
-

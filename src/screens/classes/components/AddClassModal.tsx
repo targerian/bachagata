@@ -181,6 +181,7 @@ export const AddClassModal: React.FC<AddClassModalProps> = ({
             setPreviewUrl("");
           }}
           aspect={4 / 3}
+          loading={loading}
         />
       ) : (
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -363,7 +364,12 @@ export const AddClassModal: React.FC<AddClassModalProps> = ({
             >
               Cancel
             </Button>
-            <Button type="submit" size="md" disabled={loading} className="w-full sm:w-auto">
+            <Button
+              type="submit"
+              size="md"
+              disabled={loading}
+              className="w-full sm:w-auto"
+            >
               {loading ? "Adding..." : "Add Class"}
             </Button>
           </div>
