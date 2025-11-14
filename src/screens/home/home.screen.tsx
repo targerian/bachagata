@@ -1,3 +1,4 @@
+import { Armchair, RockingChair } from "lucide-react";
 import Image from "next/image";
 import type React from "react";
 import { useCallback, useEffect, useState } from "react";
@@ -160,16 +161,7 @@ export const HomeScreen: React.FC = () => {
         "Experience the energy and fire of Salsa. Master the timing, spins, and stylish footwork of this vibrant Latin dance.",
     },
     {
-      icon: (
-        <svg
-          className="h-10 w-10 text-rose-gold"
-          fill="currentColor"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-          <path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V6H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4z" />
-        </svg>
-      ),
+      icon: <RockingChair className="h-10 w-10 text-rose-gold" />,
       title: "Chair Burlesque",
       description:
         "Build confidence and express yourself in this empowering solo dance style that combines sensuality with fitness.",
@@ -216,8 +208,8 @@ export const HomeScreen: React.FC = () => {
             </FadeIn>
             <FadeIn direction="up" delay={0.4} useInView={false}>
               <p className="text-text-primary text-base md:text-lg max-w-2xl">
-                Transform your dance, one step at a time. Join a community of
-                dancers and discover the joy of bachata.
+                Transform your life through the power of movement and join a
+                worldwide community of dancers.
               </p>
             </FadeIn>
             <ScaleIn delay={0.6} useInView={false}>
@@ -249,15 +241,18 @@ export const HomeScreen: React.FC = () => {
                 Meet Your Instructor
               </h2>
               <p className="text-rose-gold text-lg font-semibold">
-                Looci's Bio
+                Looci's Sohma
               </p>
               <p className="text-text-secondary text-base font-normal leading-relaxed">
-                With over a decade of experience, I am dedicated to sharing the
-                joy and connection of bachata. My teaching philosophy focuses on
-                building a strong foundation, fostering musicality, and creating
-                a supportive, fun atmosphere for all students, from absolute
-                beginners to advanced dancers. Let's dance together and create
-                unforgettable memories on the dance floor.
+                With 18 years of experience as a dancer, performer and teacher,
+                I am dedicated to sharing the joy and connection of bachata and
+                salsa, and the raw femininity of burlesque.
+                <br />
+                My teaching philosophy focuses on building a strong foundation,
+                fostering musicality, and creating a supportive, fun atmosphere
+                for all students, from absolute beginners to advanced dancers.
+                Let's dance together and create unforgettable memories on the
+                dance floor.
               </p>
             </SlideIn>
           </div>
