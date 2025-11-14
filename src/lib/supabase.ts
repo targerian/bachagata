@@ -23,6 +23,9 @@ export type GalleryImage = {
   title: string;
   description: string;
   image_url: string;
+  media_type: "image" | "video";
+  youtube_video_id?: string;
+  thumbnail_url?: string;
   upload_date: string;
   created_by: string;
   created_at: string;

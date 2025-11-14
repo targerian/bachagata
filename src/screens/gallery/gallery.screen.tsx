@@ -18,7 +18,7 @@ import {
 } from "@/common/components";
 import { useAuth } from "@/hooks/useAuth";
 import { type GalleryImage, supabase } from "@/lib/supabase";
-import { AdminControls, ImageEditModal, ImageUploadModal } from "./components";
+import { AdminControls, ImageEditModal, ImageUploadModal, VideoPlayerDialog } from "./components";
 
 type FilterType = "All" | "Performances" | "Workshops" | "Socials";
 
@@ -34,6 +34,7 @@ export const GalleryScreen: React.FC = () => {
   const [editingImage, setEditingImage] = useState<GalleryImage | null>(null);
   const [deletingImage, setDeletingImage] = useState<GalleryImage | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [playingVideo, setPlayingVideo] = useState<GalleryImage | null>(null);
 
   const filters: FilterType[] = ["All", "Performances", "Workshops", "Socials"];
 
@@ -61,12 +62,15 @@ export const GalleryScreen: React.FC = () => {
     if (!deletingImage) return;
 
     try {
-      // Extract file name from URL
-      const fileName = deletingImage.image_url.split("/").pop();
+      // Only delete from storage if it's an image (not a video)
+      if (deletingImage.media_type === "image") {
+        // Extract file name from URL
+        const fileName = deletingImage.image_url.split("/").pop();
 
-      // Delete from storage
-      if (fileName) {
-        await supabase.storage.from("gallery-images").remove([fileName]);
+        // Delete from storage
+        if (fileName) {
+          await supabase.storage.from("gallery-images").remove([fileName]);
+        }
       }
 
       // Delete from database
@@ -80,7 +84,7 @@ export const GalleryScreen: React.FC = () => {
       // Refresh images
       await fetchImages();
     } catch (err) {
-      console.error("Error deleting image:", err);
+      console.error("Error deleting media:", err);
     } finally {
       setDeletingImage(null);
     }
@@ -176,11 +180,21 @@ export const GalleryScreen: React.FC = () => {
         isOpen={deletingImage !== null}
         onClose={() => setDeletingImage(null)}
         onConfirm={handleDeleteImage}
-        title="Delete Image"
-        message="Are you sure you want to delete this image? This action cannot be undone."
+        title={`Delete ${deletingImage?.media_type === "video" ? "Video" : "Image"}`}
+        message={`Are you sure you want to delete this ${deletingImage?.media_type === "video" ? "video" : "image"}? This action cannot be undone.`}
         confirmText="Delete"
         isDestructive={true}
       />
+
+      {/* Video Player Dialog */}
+      {playingVideo && playingVideo.youtube_video_id && (
+        <VideoPlayerDialog
+          isOpen={true}
+          onClose={() => setPlayingVideo(null)}
+          videoId={playingVideo.youtube_video_id}
+          title={playingVideo.title}
+        />
+      )}
 
       {/* Hero Section */}
       <section className="mb-12 md:mb-20">
@@ -223,7 +237,7 @@ export const GalleryScreen: React.FC = () => {
         </div>
       </section>
 
-      {/* Add Image Button (Admin Only) */}
+      {/* Add Media Button (Admin Only) */}
       {isAdmin && isEditMode && (
         <section className="mb-8 px-4">
           <FadeIn delay={0.2} useInView={false}>
@@ -232,7 +246,7 @@ export const GalleryScreen: React.FC = () => {
               size="md"
               className="flex items-center justify-center gap-2 w-full"
             >
-              Add Image
+              Add Media
             </Button>
           </FadeIn>
         </section>
@@ -248,10 +262,10 @@ export const GalleryScreen: React.FC = () => {
           </div>
         ) : paginatedImages.length === 0 ? (
           <div className="flex flex-col justify-center items-center min-h-[400px] gap-4">
-            <p className="text-text-secondary text-lg">No images found</p>
+            <p className="text-text-secondary text-lg">No media found</p>
             {isAdmin && isEditMode && (
               <Button onClick={() => setIsUploadModalOpen(true)} size="md">
-                Upload First Image
+                Upload First Media
               </Button>
             )}
           </div>
@@ -286,6 +300,12 @@ export const GalleryScreen: React.FC = () => {
                     alt={image.title}
                     aspectRatio="portrait"
                     fillHeight={index === 0}
+                    isVideo={image.media_type === "video"}
+                    onClick={() => {
+                      if (image.media_type === "video") {
+                        setPlayingVideo(image);
+                      }
+                    }}
                   />
                 </div>
               </FadeIn>
