@@ -60,7 +60,7 @@ export const Modal: React.FC<ModalProps> = ({
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.2 }}
               className={cn(
-                "glass-card w-full max-w-2xl p-6 relative my-8",
+                "glass-card w-full max-w-2xl max-h-[calc(100vh-2rem)] p-6 relative my-8 flex flex-col",
                 className,
               )}
               onClick={(e) => e.stopPropagation()}
@@ -69,19 +69,19 @@ export const Modal: React.FC<ModalProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="absolute top-4 right-4 text-text-secondary hover:text-text-primary transition-colors"
+                className="absolute top-4 right-4 z-10 text-text-secondary hover:text-text-primary transition-colors"
                 aria-label="Close modal"
               >
                 <X className="h-6 w-6" />
               </button>
 
               {/* Title */}
-              <h2 className="text-text-primary text-2xl font-bold mb-6 pr-8">
+              <h2 className="text-text-primary text-2xl font-bold mb-6 pr-8 flex-shrink-0">
                 {title}
               </h2>
 
-              {/* Content */}
-              <div>{children}</div>
+              {/* Content - scrollable */}
+              <div className="flex-1 overflow-y-auto min-h-0">{children}</div>
             </motion.div>
           </div>
         </>
